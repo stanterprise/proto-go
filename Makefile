@@ -3,8 +3,8 @@
 # Variables
 PROTO_DIR := protobuf/testsystem
 PROTO_FILES := $(wildcard $(PROTO_DIR)/*.proto)
-GO_OUT_DIR := .
-
+-GO_OUT_DIR := .
++GO_OUT_DIR := gen/go
 
 # Protobuf compiler
 PROTOC := protoc
