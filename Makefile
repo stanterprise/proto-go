@@ -22,9 +22,9 @@ go:
 	$(PROTOC) \
 		--proto_path=$(PROTO_DIR) \
 		--go_out=$(GO_OUT_DIR) \
-		--go_opt=module=github.com/stanterprise/protobuf/gen/go \
+		--go_opt=module=github.com/stanterprise/proto-go/gen/go \
 		--go-grpc_out=$(GO_OUT_DIR) \
-		--go-grpc_opt=module=github.com/stanterprise/protobuf/gen/go \
+		--go-grpc_opt=module=github.com/stanterprise/proto-go/gen/go \
 		$(PROTO_FILES)
 
 # Clean generated code
