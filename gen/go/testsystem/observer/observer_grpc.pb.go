@@ -8,7 +8,7 @@ package observer
 
 import (
 	context "context"
-	events "github.com/stanterprise/protobuf/gen/go/testsystem/events"
+	events "github.com/stanterprise/proto-go/gen/go/testsystem/events"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -109,7 +109,7 @@ type UnsafeTestEventCollectorServer interface {
 }
 
 func RegisterTestEventCollectorServer(s grpc.ServiceRegistrar, srv TestEventCollectorServer) {
-	// If the following call panics, it indicates UnimplementedTestEventCollectorServer was
+	// If the following call pancis, it indicates UnimplementedTestEventCollectorServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
