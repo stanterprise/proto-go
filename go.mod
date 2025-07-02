@@ -1,4 +1,4 @@
-module github.com/stanterprise/proto-go/v2
+module github.com/stanterprise/proto-go
 
 go 1.23.0
 
