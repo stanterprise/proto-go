@@ -3,7 +3,7 @@
 # Variables
 PROTO_DIR := protobuf/
 PROTO_FILES := $(shell find $(PROTO_DIR) -name '*.proto')
-GO_OUT_DIR := .
+GO_OUT_DIR := gen
 
 # Protobuf compiler
 PROTOC := protoc
@@ -29,8 +29,8 @@ go:
 
 # Clean generated code
 clean:
-	rm -rf gen/go/testsystem
-	rm -rf gen/python/testsystem
+	rm -rf $(GO_OUT_DIR)
+	
 
 # Help
 help:
