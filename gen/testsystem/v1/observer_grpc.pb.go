@@ -2,13 +2,12 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: observer.proto
+// source: testsystem/v1/observer.proto
 
-package observer
+package v1
 
 import (
 	context "context"
-	events "github.com/stanterprise/proto-go/gen/go/testsystem/events"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -20,18 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TestEventCollector_ReportTestStart_FullMethodName  = "/testsystem.observer.TestEventCollector/ReportTestStart"
-	TestEventCollector_ReportTestFinish_FullMethodName = "/testsystem.observer.TestEventCollector/ReportTestFinish"
-	TestEventCollector_ReportTestStep_FullMethodName   = "/testsystem.observer.TestEventCollector/ReportTestStep"
+	TestEventCollector_ReportTestStart_FullMethodName  = "/testsystem.v1.TestEventCollector/ReportTestStart"
+	TestEventCollector_ReportTestFinish_FullMethodName = "/testsystem.v1.TestEventCollector/ReportTestFinish"
+	TestEventCollector_ReportTestStep_FullMethodName   = "/testsystem.v1.TestEventCollector/ReportTestStep"
 )
 
 // TestEventCollectorClient is the client API for TestEventCollector service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TestEventCollectorClient interface {
-	ReportTestStart(ctx context.Context, in *events.TestStartEvent, opts ...grpc.CallOption) (*Ack, error)
-	ReportTestFinish(ctx context.Context, in *events.TestFinishEvent, opts ...grpc.CallOption) (*Ack, error)
-	ReportTestStep(ctx context.Context, in *events.TestStepEvent, opts ...grpc.CallOption) (*Ack, error)
+	ReportTestStart(ctx context.Context, in *TestStartEventRequest, opts ...grpc.CallOption) (*AckResponse, error)
+	ReportTestFinish(ctx context.Context, in *TestFinishEventRequest, opts ...grpc.CallOption) (*AckResponse, error)
+	ReportTestStep(ctx context.Context, in *TestStepEventRequest, opts ...grpc.CallOption) (*AckResponse, error)
 }
 
 type testEventCollectorClient struct {
@@ -42,9 +41,9 @@ func NewTestEventCollectorClient(cc grpc.ClientConnInterface) TestEventCollector
 	return &testEventCollectorClient{cc}
 }
 
-func (c *testEventCollectorClient) ReportTestStart(ctx context.Context, in *events.TestStartEvent, opts ...grpc.CallOption) (*Ack, error) {
+func (c *testEventCollectorClient) ReportTestStart(ctx context.Context, in *TestStartEventRequest, opts ...grpc.CallOption) (*AckResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Ack)
+	out := new(AckResponse)
 	err := c.cc.Invoke(ctx, TestEventCollector_ReportTestStart_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -52,9 +51,9 @@ func (c *testEventCollectorClient) ReportTestStart(ctx context.Context, in *even
 	return out, nil
 }
 
-func (c *testEventCollectorClient) ReportTestFinish(ctx context.Context, in *events.TestFinishEvent, opts ...grpc.CallOption) (*Ack, error) {
+func (c *testEventCollectorClient) ReportTestFinish(ctx context.Context, in *TestFinishEventRequest, opts ...grpc.CallOption) (*AckResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Ack)
+	out := new(AckResponse)
 	err := c.cc.Invoke(ctx, TestEventCollector_ReportTestFinish_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -62,9 +61,9 @@ func (c *testEventCollectorClient) ReportTestFinish(ctx context.Context, in *eve
 	return out, nil
 }
 
-func (c *testEventCollectorClient) ReportTestStep(ctx context.Context, in *events.TestStepEvent, opts ...grpc.CallOption) (*Ack, error) {
+func (c *testEventCollectorClient) ReportTestStep(ctx context.Context, in *TestStepEventRequest, opts ...grpc.CallOption) (*AckResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Ack)
+	out := new(AckResponse)
 	err := c.cc.Invoke(ctx, TestEventCollector_ReportTestStep_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -76,9 +75,9 @@ func (c *testEventCollectorClient) ReportTestStep(ctx context.Context, in *event
 // All implementations must embed UnimplementedTestEventCollectorServer
 // for forward compatibility.
 type TestEventCollectorServer interface {
-	ReportTestStart(context.Context, *events.TestStartEvent) (*Ack, error)
-	ReportTestFinish(context.Context, *events.TestFinishEvent) (*Ack, error)
-	ReportTestStep(context.Context, *events.TestStepEvent) (*Ack, error)
+	ReportTestStart(context.Context, *TestStartEventRequest) (*AckResponse, error)
+	ReportTestFinish(context.Context, *TestFinishEventRequest) (*AckResponse, error)
+	ReportTestStep(context.Context, *TestStepEventRequest) (*AckResponse, error)
 	mustEmbedUnimplementedTestEventCollectorServer()
 }
 
@@ -89,13 +88,13 @@ type TestEventCollectorServer interface {
 // pointer dereference when methods are called.
 type UnimplementedTestEventCollectorServer struct{}
 
-func (UnimplementedTestEventCollectorServer) ReportTestStart(context.Context, *events.TestStartEvent) (*Ack, error) {
+func (UnimplementedTestEventCollectorServer) ReportTestStart(context.Context, *TestStartEventRequest) (*AckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReportTestStart not implemented")
 }
-func (UnimplementedTestEventCollectorServer) ReportTestFinish(context.Context, *events.TestFinishEvent) (*Ack, error) {
+func (UnimplementedTestEventCollectorServer) ReportTestFinish(context.Context, *TestFinishEventRequest) (*AckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReportTestFinish not implemented")
 }
-func (UnimplementedTestEventCollectorServer) ReportTestStep(context.Context, *events.TestStepEvent) (*Ack, error) {
+func (UnimplementedTestEventCollectorServer) ReportTestStep(context.Context, *TestStepEventRequest) (*AckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReportTestStep not implemented")
 }
 func (UnimplementedTestEventCollectorServer) mustEmbedUnimplementedTestEventCollectorServer() {}
@@ -120,7 +119,7 @@ func RegisterTestEventCollectorServer(s grpc.ServiceRegistrar, srv TestEventColl
 }
 
 func _TestEventCollector_ReportTestStart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(events.TestStartEvent)
+	in := new(TestStartEventRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -132,13 +131,13 @@ func _TestEventCollector_ReportTestStart_Handler(srv interface{}, ctx context.Co
 		FullMethod: TestEventCollector_ReportTestStart_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TestEventCollectorServer).ReportTestStart(ctx, req.(*events.TestStartEvent))
+		return srv.(TestEventCollectorServer).ReportTestStart(ctx, req.(*TestStartEventRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TestEventCollector_ReportTestFinish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(events.TestFinishEvent)
+	in := new(TestFinishEventRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -150,13 +149,13 @@ func _TestEventCollector_ReportTestFinish_Handler(srv interface{}, ctx context.C
 		FullMethod: TestEventCollector_ReportTestFinish_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TestEventCollectorServer).ReportTestFinish(ctx, req.(*events.TestFinishEvent))
+		return srv.(TestEventCollectorServer).ReportTestFinish(ctx, req.(*TestFinishEventRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TestEventCollector_ReportTestStep_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(events.TestStepEvent)
+	in := new(TestStepEventRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -168,7 +167,7 @@ func _TestEventCollector_ReportTestStep_Handler(srv interface{}, ctx context.Con
 		FullMethod: TestEventCollector_ReportTestStep_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TestEventCollectorServer).ReportTestStep(ctx, req.(*events.TestStepEvent))
+		return srv.(TestEventCollectorServer).ReportTestStep(ctx, req.(*TestStepEventRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -177,7 +176,7 @@ func _TestEventCollector_ReportTestStep_Handler(srv interface{}, ctx context.Con
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var TestEventCollector_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "testsystem.observer.TestEventCollector",
+	ServiceName: "testsystem.v1.TestEventCollector",
 	HandlerType: (*TestEventCollectorServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -194,5 +193,5 @@ var TestEventCollector_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "observer.proto",
+	Metadata: "testsystem/v1/observer.proto",
 }

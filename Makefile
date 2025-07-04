@@ -1,9 +1,9 @@
 # Makefile for generating gRPC code from .proto files
 
 # Variables
-PROTO_DIR := protobuf/testsystem
-PROTO_FILES := $(wildcard $(PROTO_DIR)/*.proto)
-GO_OUT_DIR := gen/go
+PROTO_DIR := protobuf/
+PROTO_FILES := $(shell find $(PROTO_DIR) -name '*.proto')
+GO_OUT_DIR := gen
 
 # Protobuf compiler
 PROTOC := protoc
@@ -22,15 +22,15 @@ go:
 	$(PROTOC) \
 		--proto_path=$(PROTO_DIR) \
 		--go_out=$(GO_OUT_DIR) \
-		--go_opt=module=github.com/stanterprise/proto-go/gen/go \
+		--go_opt=module=github.com/stanterprise/proto-go \
 		--go-grpc_out=$(GO_OUT_DIR) \
-		--go-grpc_opt=module=github.com/stanterprise/proto-go/gen/go \
+		--go-grpc_opt=module=github.com/stanterprise/proto-go \
 		$(PROTO_FILES)
 
 # Clean generated code
 clean:
-	rm -rf gen/go/testsystem
-	rm -rf gen/python/testsystem
+	rm -rf $(GO_OUT_DIR)
+	
 
 # Help
 help:
