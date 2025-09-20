@@ -2,9 +2,9 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: testsystem/v1/common.proto
+// source: testsystem/v1/common/common.proto
 
-package v1
+package common
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -61,11 +61,11 @@ func (x TestStatus) String() string {
 }
 
 func (TestStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_testsystem_v1_common_proto_enumTypes[0].Descriptor()
+	return file_testsystem_v1_common_common_proto_enumTypes[0].Descriptor()
 }
 
 func (TestStatus) Type() protoreflect.EnumType {
-	return &file_testsystem_v1_common_proto_enumTypes[0]
+	return &file_testsystem_v1_common_common_proto_enumTypes[0]
 }
 
 func (x TestStatus) Number() protoreflect.EnumNumber {
@@ -74,7 +74,7 @@ func (x TestStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use TestStatus.Descriptor instead.
 func (TestStatus) EnumDescriptor() ([]byte, []int) {
-	return file_testsystem_v1_common_proto_rawDescGZIP(), []int{0}
+	return file_testsystem_v1_common_common_proto_rawDescGZIP(), []int{0}
 }
 
 // Message for attachments
@@ -93,7 +93,7 @@ type Attachment struct {
 
 func (x *Attachment) Reset() {
 	*x = Attachment{}
-	mi := &file_testsystem_v1_common_proto_msgTypes[0]
+	mi := &file_testsystem_v1_common_common_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -105,7 +105,7 @@ func (x *Attachment) String() string {
 func (*Attachment) ProtoMessage() {}
 
 func (x *Attachment) ProtoReflect() protoreflect.Message {
-	mi := &file_testsystem_v1_common_proto_msgTypes[0]
+	mi := &file_testsystem_v1_common_common_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -118,7 +118,7 @@ func (x *Attachment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Attachment.ProtoReflect.Descriptor instead.
 func (*Attachment) Descriptor() ([]byte, []int) {
-	return file_testsystem_v1_common_proto_rawDescGZIP(), []int{0}
+	return file_testsystem_v1_common_common_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Attachment) GetName() string {
@@ -176,11 +176,11 @@ func (*Attachment_Content) isAttachment_Payload() {}
 
 func (*Attachment_Uri) isAttachment_Payload() {}
 
-var File_testsystem_v1_common_proto protoreflect.FileDescriptor
+var File_testsystem_v1_common_common_proto protoreflect.FileDescriptor
 
-const file_testsystem_v1_common_proto_rawDesc = "" +
+const file_testsystem_v1_common_common_proto_rawDesc = "" +
 	"\n" +
-	"\x1atestsystem/v1/common.proto\x12\rtestsystem.v1\"x\n" +
+	"!testsystem/v1/common/common.proto\x12\x14testsystem.v1.common\"x\n" +
 	"\n" +
 	"Attachment\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
@@ -197,28 +197,28 @@ const file_testsystem_v1_common_proto_rawDesc = "" +
 	"\x06FAILED\x10\x02\x12\v\n" +
 	"\aSKIPPED\x10\x03\x12\n" +
 	"\n" +
-	"\x06BROKEN\x10\x04BR\n" +
-	"\x1ecom.stanterprise.testsystem.v1P\x01Z.github.com/stanterprise/proto-go/testsystem/v1b\x06proto3"
+	"\x06BROKEN\x10\x04B`\n" +
+	"%com.stanterprise.testsystem.v1.commonP\x01Z5github.com/stanterprise/proto-go/testsystem/v1/commonb\x06proto3"
 
 var (
-	file_testsystem_v1_common_proto_rawDescOnce sync.Once
-	file_testsystem_v1_common_proto_rawDescData []byte
+	file_testsystem_v1_common_common_proto_rawDescOnce sync.Once
+	file_testsystem_v1_common_common_proto_rawDescData []byte
 )
 
-func file_testsystem_v1_common_proto_rawDescGZIP() []byte {
-	file_testsystem_v1_common_proto_rawDescOnce.Do(func() {
-		file_testsystem_v1_common_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_testsystem_v1_common_proto_rawDesc), len(file_testsystem_v1_common_proto_rawDesc)))
+func file_testsystem_v1_common_common_proto_rawDescGZIP() []byte {
+	file_testsystem_v1_common_common_proto_rawDescOnce.Do(func() {
+		file_testsystem_v1_common_common_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_testsystem_v1_common_common_proto_rawDesc), len(file_testsystem_v1_common_common_proto_rawDesc)))
 	})
-	return file_testsystem_v1_common_proto_rawDescData
+	return file_testsystem_v1_common_common_proto_rawDescData
 }
 
-var file_testsystem_v1_common_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_testsystem_v1_common_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
-var file_testsystem_v1_common_proto_goTypes = []any{
-	(TestStatus)(0),    // 0: testsystem.v1.TestStatus
-	(*Attachment)(nil), // 1: testsystem.v1.Attachment
+var file_testsystem_v1_common_common_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_testsystem_v1_common_common_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_testsystem_v1_common_common_proto_goTypes = []any{
+	(TestStatus)(0),    // 0: testsystem.v1.common.TestStatus
+	(*Attachment)(nil), // 1: testsystem.v1.common.Attachment
 }
-var file_testsystem_v1_common_proto_depIdxs = []int32{
+var file_testsystem_v1_common_common_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
 	0, // [0:0] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -226,12 +226,12 @@ var file_testsystem_v1_common_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_testsystem_v1_common_proto_init() }
-func file_testsystem_v1_common_proto_init() {
-	if File_testsystem_v1_common_proto != nil {
+func init() { file_testsystem_v1_common_common_proto_init() }
+func file_testsystem_v1_common_common_proto_init() {
+	if File_testsystem_v1_common_common_proto != nil {
 		return
 	}
-	file_testsystem_v1_common_proto_msgTypes[0].OneofWrappers = []any{
+	file_testsystem_v1_common_common_proto_msgTypes[0].OneofWrappers = []any{
 		(*Attachment_Content)(nil),
 		(*Attachment_Uri)(nil),
 	}
@@ -239,18 +239,18 @@ func file_testsystem_v1_common_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_testsystem_v1_common_proto_rawDesc), len(file_testsystem_v1_common_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_testsystem_v1_common_common_proto_rawDesc), len(file_testsystem_v1_common_common_proto_rawDesc)),
 			NumEnums:      1,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_testsystem_v1_common_proto_goTypes,
-		DependencyIndexes: file_testsystem_v1_common_proto_depIdxs,
-		EnumInfos:         file_testsystem_v1_common_proto_enumTypes,
-		MessageInfos:      file_testsystem_v1_common_proto_msgTypes,
+		GoTypes:           file_testsystem_v1_common_common_proto_goTypes,
+		DependencyIndexes: file_testsystem_v1_common_common_proto_depIdxs,
+		EnumInfos:         file_testsystem_v1_common_common_proto_enumTypes,
+		MessageInfos:      file_testsystem_v1_common_common_proto_msgTypes,
 	}.Build()
-	File_testsystem_v1_common_proto = out.File
-	file_testsystem_v1_common_proto_goTypes = nil
-	file_testsystem_v1_common_proto_depIdxs = nil
+	File_testsystem_v1_common_common_proto = out.File
+	file_testsystem_v1_common_common_proto_goTypes = nil
+	file_testsystem_v1_common_common_proto_depIdxs = nil
 }
