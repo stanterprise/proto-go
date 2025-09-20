@@ -3,7 +3,7 @@
 # Variables
 PROTO_DIR := protobuf/
 PROTO_FILES := $(shell find $(PROTO_DIR) -name '*.proto')
-GO_OUT_DIR := gen
+GO_OUT_DIR := ./
 
 # Protobuf compiler
 PROTOC := protoc
@@ -29,7 +29,7 @@ go:
 
 # Clean generated code
 clean:
-	rm -rf $(GO_OUT_DIR)
+	rm -rf testsystem
 	
 
 # Help
