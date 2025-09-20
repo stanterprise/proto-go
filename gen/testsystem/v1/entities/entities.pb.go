@@ -2,9 +2,9 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: testsystem/v1/test_objects.proto
+// source: testsystem/v1/entities/entities.proto
 
-package v1
+package entities
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -35,7 +35,7 @@ type TestScript struct {
 
 func (x *TestScript) Reset() {
 	*x = TestScript{}
-	mi := &file_testsystem_v1_test_objects_proto_msgTypes[0]
+	mi := &file_testsystem_v1_entities_entities_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47,7 +47,7 @@ func (x *TestScript) String() string {
 func (*TestScript) ProtoMessage() {}
 
 func (x *TestScript) ProtoReflect() protoreflect.Message {
-	mi := &file_testsystem_v1_test_objects_proto_msgTypes[0]
+	mi := &file_testsystem_v1_entities_entities_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60,7 +60,7 @@ func (x *TestScript) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TestScript.ProtoReflect.Descriptor instead.
 func (*TestScript) Descriptor() ([]byte, []int) {
-	return file_testsystem_v1_test_objects_proto_rawDescGZIP(), []int{0}
+	return file_testsystem_v1_entities_entities_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *TestScript) GetId() string {
@@ -107,18 +107,19 @@ func (x *TestScript) GetIsActive() bool {
 
 type TestSuite struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`                                                                                   // Name of the test suite
-	Scripts       []*TestScript          `protobuf:"bytes,2,rep,name=scripts,proto3" json:"scripts,omitempty"`                                                                             // List of test scripts in the suite
-	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`                                                                     // Optional description of the test suite
-	Metadata      map[string]string      `protobuf:"bytes,4,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Additional metadata for the test suite
-	SubSuites     []*TestSuite           `protobuf:"bytes,5,rep,name=sub_suites,json=subSuites,proto3" json:"sub_suites,omitempty"`                                                        // Nested test suites
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                                                       // Unique identifier for the test suite
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                                                   // Name of the test suite
+	Scripts       []*TestScript          `protobuf:"bytes,3,rep,name=scripts,proto3" json:"scripts,omitempty"`                                                                             // List of test scripts in the suite
+	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`                                                                     // Optional description of the test suite
+	Metadata      map[string]string      `protobuf:"bytes,5,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Additional metadata for the test suite
+	SubSuites     []*TestSuite           `protobuf:"bytes,6,rep,name=sub_suites,json=subSuites,proto3" json:"sub_suites,omitempty"`                                                        // Nested test suites
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *TestSuite) Reset() {
 	*x = TestSuite{}
-	mi := &file_testsystem_v1_test_objects_proto_msgTypes[1]
+	mi := &file_testsystem_v1_entities_entities_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -130,7 +131,7 @@ func (x *TestSuite) String() string {
 func (*TestSuite) ProtoMessage() {}
 
 func (x *TestSuite) ProtoReflect() protoreflect.Message {
-	mi := &file_testsystem_v1_test_objects_proto_msgTypes[1]
+	mi := &file_testsystem_v1_entities_entities_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -143,7 +144,14 @@ func (x *TestSuite) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TestSuite.ProtoReflect.Descriptor instead.
 func (*TestSuite) Descriptor() ([]byte, []int) {
-	return file_testsystem_v1_test_objects_proto_rawDescGZIP(), []int{1}
+	return file_testsystem_v1_entities_entities_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *TestSuite) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
 }
 
 func (x *TestSuite) GetName() string {
@@ -181,60 +189,61 @@ func (x *TestSuite) GetSubSuites() []*TestSuite {
 	return nil
 }
 
-var File_testsystem_v1_test_objects_proto protoreflect.FileDescriptor
+var File_testsystem_v1_entities_entities_proto protoreflect.FileDescriptor
 
-const file_testsystem_v1_test_objects_proto_rawDesc = "" +
+const file_testsystem_v1_entities_entities_proto_rawDesc = "" +
 	"\n" +
-	" testsystem/v1/test_objects.proto\x12\rtestsystem.v1\"\x9a\x02\n" +
+	"%testsystem/v1/entities/entities.proto\x12\x16testsystem.v1.entities\"\xa3\x02\n" +
 	"\n" +
 	"TestScript\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x14\n" +
-	"\x05steps\x18\x04 \x03(\tR\x05steps\x12C\n" +
-	"\bmetadata\x18\x05 \x03(\v2'.testsystem.v1.TestScript.MetadataEntryR\bmetadata\x12 \n" +
+	"\x05steps\x18\x04 \x03(\tR\x05steps\x12L\n" +
+	"\bmetadata\x18\x05 \x03(\v20.testsystem.v1.entities.TestScript.MetadataEntryR\bmetadata\x12 \n" +
 	"\tis_active\x18\x06 \x01(\bH\x00R\bisActive\x88\x01\x01\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01B\f\n" +
 	"\n" +
-	"_is_active\"\xb0\x02\n" +
-	"\tTestSuite\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x123\n" +
-	"\ascripts\x18\x02 \x03(\v2\x19.testsystem.v1.TestScriptR\ascripts\x12 \n" +
-	"\vdescription\x18\x03 \x01(\tR\vdescription\x12B\n" +
-	"\bmetadata\x18\x04 \x03(\v2&.testsystem.v1.TestSuite.MetadataEntryR\bmetadata\x127\n" +
+	"_is_active\"\xdb\x02\n" +
+	"\tTestSuite\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12<\n" +
+	"\ascripts\x18\x03 \x03(\v2\".testsystem.v1.entities.TestScriptR\ascripts\x12 \n" +
+	"\vdescription\x18\x04 \x01(\tR\vdescription\x12K\n" +
+	"\bmetadata\x18\x05 \x03(\v2/.testsystem.v1.entities.TestSuite.MetadataEntryR\bmetadata\x12@\n" +
 	"\n" +
-	"sub_suites\x18\x05 \x03(\v2\x18.testsystem.v1.TestSuiteR\tsubSuites\x1a;\n" +
+	"sub_suites\x18\x06 \x03(\v2!.testsystem.v1.entities.TestSuiteR\tsubSuites\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01BR\n" +
-	"\x1ecom.stanterprise.testsystem.v1P\x01Z.github.com/stanterprise/proto-go/testsystem/v1b\x06proto3"
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01Bd\n" +
+	"'com.stanterprise.testsystem.v1.entitiesP\x01Z7github.com/stanterprise/proto-go/testsystem/v1/entitiesb\x06proto3"
 
 var (
-	file_testsystem_v1_test_objects_proto_rawDescOnce sync.Once
-	file_testsystem_v1_test_objects_proto_rawDescData []byte
+	file_testsystem_v1_entities_entities_proto_rawDescOnce sync.Once
+	file_testsystem_v1_entities_entities_proto_rawDescData []byte
 )
 
-func file_testsystem_v1_test_objects_proto_rawDescGZIP() []byte {
-	file_testsystem_v1_test_objects_proto_rawDescOnce.Do(func() {
-		file_testsystem_v1_test_objects_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_testsystem_v1_test_objects_proto_rawDesc), len(file_testsystem_v1_test_objects_proto_rawDesc)))
+func file_testsystem_v1_entities_entities_proto_rawDescGZIP() []byte {
+	file_testsystem_v1_entities_entities_proto_rawDescOnce.Do(func() {
+		file_testsystem_v1_entities_entities_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_testsystem_v1_entities_entities_proto_rawDesc), len(file_testsystem_v1_entities_entities_proto_rawDesc)))
 	})
-	return file_testsystem_v1_test_objects_proto_rawDescData
+	return file_testsystem_v1_entities_entities_proto_rawDescData
 }
 
-var file_testsystem_v1_test_objects_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
-var file_testsystem_v1_test_objects_proto_goTypes = []any{
-	(*TestScript)(nil), // 0: testsystem.v1.TestScript
-	(*TestSuite)(nil),  // 1: testsystem.v1.TestSuite
-	nil,                // 2: testsystem.v1.TestScript.MetadataEntry
-	nil,                // 3: testsystem.v1.TestSuite.MetadataEntry
+var file_testsystem_v1_entities_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_testsystem_v1_entities_entities_proto_goTypes = []any{
+	(*TestScript)(nil), // 0: testsystem.v1.entities.TestScript
+	(*TestSuite)(nil),  // 1: testsystem.v1.entities.TestSuite
+	nil,                // 2: testsystem.v1.entities.TestScript.MetadataEntry
+	nil,                // 3: testsystem.v1.entities.TestSuite.MetadataEntry
 }
-var file_testsystem_v1_test_objects_proto_depIdxs = []int32{
-	2, // 0: testsystem.v1.TestScript.metadata:type_name -> testsystem.v1.TestScript.MetadataEntry
-	0, // 1: testsystem.v1.TestSuite.scripts:type_name -> testsystem.v1.TestScript
-	3, // 2: testsystem.v1.TestSuite.metadata:type_name -> testsystem.v1.TestSuite.MetadataEntry
-	1, // 3: testsystem.v1.TestSuite.sub_suites:type_name -> testsystem.v1.TestSuite
+var file_testsystem_v1_entities_entities_proto_depIdxs = []int32{
+	2, // 0: testsystem.v1.entities.TestScript.metadata:type_name -> testsystem.v1.entities.TestScript.MetadataEntry
+	0, // 1: testsystem.v1.entities.TestSuite.scripts:type_name -> testsystem.v1.entities.TestScript
+	3, // 2: testsystem.v1.entities.TestSuite.metadata:type_name -> testsystem.v1.entities.TestSuite.MetadataEntry
+	1, // 3: testsystem.v1.entities.TestSuite.sub_suites:type_name -> testsystem.v1.entities.TestSuite
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name
@@ -242,27 +251,27 @@ var file_testsystem_v1_test_objects_proto_depIdxs = []int32{
 	0, // [0:4] is the sub-list for field type_name
 }
 
-func init() { file_testsystem_v1_test_objects_proto_init() }
-func file_testsystem_v1_test_objects_proto_init() {
-	if File_testsystem_v1_test_objects_proto != nil {
+func init() { file_testsystem_v1_entities_entities_proto_init() }
+func file_testsystem_v1_entities_entities_proto_init() {
+	if File_testsystem_v1_entities_entities_proto != nil {
 		return
 	}
-	file_testsystem_v1_test_objects_proto_msgTypes[0].OneofWrappers = []any{}
+	file_testsystem_v1_entities_entities_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_testsystem_v1_test_objects_proto_rawDesc), len(file_testsystem_v1_test_objects_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_testsystem_v1_entities_entities_proto_rawDesc), len(file_testsystem_v1_entities_entities_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_testsystem_v1_test_objects_proto_goTypes,
-		DependencyIndexes: file_testsystem_v1_test_objects_proto_depIdxs,
-		MessageInfos:      file_testsystem_v1_test_objects_proto_msgTypes,
+		GoTypes:           file_testsystem_v1_entities_entities_proto_goTypes,
+		DependencyIndexes: file_testsystem_v1_entities_entities_proto_depIdxs,
+		MessageInfos:      file_testsystem_v1_entities_entities_proto_msgTypes,
 	}.Build()
-	File_testsystem_v1_test_objects_proto = out.File
-	file_testsystem_v1_test_objects_proto_goTypes = nil
-	file_testsystem_v1_test_objects_proto_depIdxs = nil
+	File_testsystem_v1_entities_entities_proto = out.File
+	file_testsystem_v1_entities_entities_proto_goTypes = nil
+	file_testsystem_v1_entities_entities_proto_depIdxs = nil
 }
