@@ -7,8 +7,10 @@
 package entities
 
 import (
+	common "github.com/stanterprise/proto-go/testsystem/v1/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -21,32 +23,82 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type TestScript struct {
+type SuiteType int32
+
+const (
+	SuiteType_ROOT     SuiteType = 0
+	SuiteType_PROJECT  SuiteType = 1
+	SuiteType_SUBSUITE SuiteType = 2
+)
+
+// Enum value maps for SuiteType.
+var (
+	SuiteType_name = map[int32]string{
+		0: "ROOT",
+		1: "PROJECT",
+		2: "SUBSUITE",
+	}
+	SuiteType_value = map[string]int32{
+		"ROOT":     0,
+		"PROJECT":  1,
+		"SUBSUITE": 2,
+	}
+)
+
+func (x SuiteType) Enum() *SuiteType {
+	p := new(SuiteType)
+	*p = x
+	return p
+}
+
+func (x SuiteType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SuiteType) Descriptor() protoreflect.EnumDescriptor {
+	return file_testsystem_v1_entities_entities_proto_enumTypes[0].Descriptor()
+}
+
+func (SuiteType) Type() protoreflect.EnumType {
+	return &file_testsystem_v1_entities_entities_proto_enumTypes[0]
+}
+
+func (x SuiteType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SuiteType.Descriptor instead.
+func (SuiteType) EnumDescriptor() ([]byte, []int) {
+	return file_testsystem_v1_entities_entities_proto_rawDescGZIP(), []int{0}
+}
+
+type TestCase struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                                                       // Unique identifier for the test script
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                                                   // Name of the test script
 	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`                                                                     // Description of the test script
-	Steps         []string               `protobuf:"bytes,4,rep,name=steps,proto3" json:"steps,omitempty"`                                                                                 // List of steps in the test script
+	Steps         []*Step                `protobuf:"bytes,4,rep,name=steps,proto3" json:"steps,omitempty"`                                                                                 // List of steps in the test script
 	Metadata      map[string]string      `protobuf:"bytes,5,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Additional metadata for the test script
-	IsActive      *bool                  `protobuf:"varint,6,opt,name=is_active,json=isActive,proto3,oneof" json:"is_active,omitempty"`                                                    // Indicates if the script is currently active or deprecated
+	Status        common.TestStatus      `protobuf:"varint,6,opt,name=status,proto3,enum=testsystem.v1.common.TestStatus" json:"status,omitempty"`                                         // Current status of the test script
+	ParentSuite   *TestSuite             `protobuf:"bytes,7,opt,name=parent_suite,json=parentSuite,proto3" json:"parent_suite,omitempty"`                                                  // Reference to the parent suite, if any
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TestScript) Reset() {
-	*x = TestScript{}
+func (x *TestCase) Reset() {
+	*x = TestCase{}
 	mi := &file_testsystem_v1_entities_entities_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TestScript) String() string {
+func (x *TestCase) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TestScript) ProtoMessage() {}
+func (*TestCase) ProtoMessage() {}
 
-func (x *TestScript) ProtoReflect() protoreflect.Message {
+func (x *TestCase) ProtoReflect() protoreflect.Message {
 	mi := &file_testsystem_v1_entities_entities_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -58,61 +110,71 @@ func (x *TestScript) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TestScript.ProtoReflect.Descriptor instead.
-func (*TestScript) Descriptor() ([]byte, []int) {
+// Deprecated: Use TestCase.ProtoReflect.Descriptor instead.
+func (*TestCase) Descriptor() ([]byte, []int) {
 	return file_testsystem_v1_entities_entities_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *TestScript) GetId() string {
+func (x *TestCase) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-func (x *TestScript) GetName() string {
+func (x *TestCase) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *TestScript) GetDescription() string {
+func (x *TestCase) GetDescription() string {
 	if x != nil {
 		return x.Description
 	}
 	return ""
 }
 
-func (x *TestScript) GetSteps() []string {
+func (x *TestCase) GetSteps() []*Step {
 	if x != nil {
 		return x.Steps
 	}
 	return nil
 }
 
-func (x *TestScript) GetMetadata() map[string]string {
+func (x *TestCase) GetMetadata() map[string]string {
 	if x != nil {
 		return x.Metadata
 	}
 	return nil
 }
 
-func (x *TestScript) GetIsActive() bool {
-	if x != nil && x.IsActive != nil {
-		return *x.IsActive
+func (x *TestCase) GetStatus() common.TestStatus {
+	if x != nil {
+		return x.Status
 	}
-	return false
+	return common.TestStatus(0)
+}
+
+func (x *TestCase) GetParentSuite() *TestSuite {
+	if x != nil {
+		return x.ParentSuite
+	}
+	return nil
 }
 
 type TestSuite struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                                                       // Unique identifier for the test suite
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                                                   // Name of the test suite
-	Scripts       []*TestScript          `protobuf:"bytes,3,rep,name=scripts,proto3" json:"scripts,omitempty"`                                                                             // List of test scripts in the suite
-	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`                                                                     // Optional description of the test suite
-	Metadata      map[string]string      `protobuf:"bytes,5,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Additional metadata for the test suite
-	SubSuites     []*TestSuite           `protobuf:"bytes,6,rep,name=sub_suites,json=subSuites,proto3" json:"sub_suites,omitempty"`                                                        // Nested test suites
+	Tests         []*TestCase            `protobuf:"bytes,3,rep,name=tests,proto3" json:"tests,omitempty"`                                                                                 // List of test cases in the suite
+	SubSuites     []*TestSuite           `protobuf:"bytes,4,rep,name=sub_suites,json=subSuites,proto3" json:"sub_suites,omitempty"`                                                        // Nested test suites
+	Description   string                 `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`                                                                     // Optional description of the test suite
+	Location      string                 `protobuf:"bytes,6,opt,name=location,proto3" json:"location,omitempty"`                                                                           // Location or path of the test suite definition
+	Metadata      map[string]string      `protobuf:"bytes,7,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Additional metadata for the test suite
+	Type          SuiteType              `protobuf:"varint,8,opt,name=type,proto3,enum=testsystem.v1.entities.SuiteType" json:"type,omitempty"`                                            // Type of the test suite (e.g., "root", "project", "subsuite")
+	ParentSuite   *TestSuite             `protobuf:"bytes,9,opt,name=parent_suite,json=parentSuite,proto3" json:"parent_suite,omitempty"`                                                  // Reference to the parent suite, if any
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -161,23 +223,9 @@ func (x *TestSuite) GetName() string {
 	return ""
 }
 
-func (x *TestSuite) GetScripts() []*TestScript {
+func (x *TestSuite) GetTests() []*TestCase {
 	if x != nil {
-		return x.Scripts
-	}
-	return nil
-}
-
-func (x *TestSuite) GetDescription() string {
-	if x != nil {
-		return x.Description
-	}
-	return ""
-}
-
-func (x *TestSuite) GetMetadata() map[string]string {
-	if x != nil {
-		return x.Metadata
+		return x.Tests
 	}
 	return nil
 }
@@ -189,35 +237,376 @@ func (x *TestSuite) GetSubSuites() []*TestSuite {
 	return nil
 }
 
+func (x *TestSuite) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *TestSuite) GetLocation() string {
+	if x != nil {
+		return x.Location
+	}
+	return ""
+}
+
+func (x *TestSuite) GetMetadata() map[string]string {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *TestSuite) GetType() SuiteType {
+	if x != nil {
+		return x.Type
+	}
+	return SuiteType_ROOT
+}
+
+func (x *TestSuite) GetParentSuite() *TestSuite {
+	if x != nil {
+		return x.ParentSuite
+	}
+	return nil
+}
+
+type Step struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                                                       // Unique identifier for the test result
+	TestId        string                 `protobuf:"bytes,2,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`                                                                 // Reference to the test case
+	Title         string                 `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`                                                                                 // Title of the test result
+	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`                                                                     // Description of the step
+	StartTime     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`                                                        // Start time of the test execution
+	Type          string                 `protobuf:"bytes,6,opt,name=type,proto3" json:"type,omitempty"`                                                                                   // Type of the step (e.g., "setup", "execution", "validation")
+	Duration      int64                  `protobuf:"varint,7,opt,name=duration,proto3" json:"duration,omitempty"`                                                                          // Estimated duration in seconds
+	Metadata      map[string]string      `protobuf:"bytes,8,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Additional metadata for the step
+	ParentStepId  string                 `protobuf:"bytes,9,opt,name=parent_step_id,json=parentStepId,proto3" json:"parent_step_id,omitempty"`                                             // Reference to the parent step for nested steps
+	SubSteps      []*Step                `protobuf:"bytes,10,rep,name=sub_steps,json=subSteps,proto3" json:"sub_steps,omitempty"`                                                          // Nested steps
+	WorkerIndex   string                 `protobuf:"bytes,11,opt,name=worker_index,json=workerIndex,proto3" json:"worker_index,omitempty"`                                                 // Identifier for the worker executing the step
+	Status        common.TestStatus      `protobuf:"varint,12,opt,name=status,proto3,enum=testsystem.v1.common.TestStatus" json:"status,omitempty"`                                        // Result status (e.g., "passed", "failed", "skipped")
+	Error         string                 `protobuf:"bytes,13,opt,name=error,proto3" json:"error,omitempty"`                                                                                // Error message if the step failed
+	Location      string                 `protobuf:"bytes,14,opt,name=location,proto3" json:"location,omitempty"`                                                                          // Location in the code where the step is defined
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Step) Reset() {
+	*x = Step{}
+	mi := &file_testsystem_v1_entities_entities_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Step) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Step) ProtoMessage() {}
+
+func (x *Step) ProtoReflect() protoreflect.Message {
+	mi := &file_testsystem_v1_entities_entities_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Step.ProtoReflect.Descriptor instead.
+func (*Step) Descriptor() ([]byte, []int) {
+	return file_testsystem_v1_entities_entities_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *Step) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Step) GetTestId() string {
+	if x != nil {
+		return x.TestId
+	}
+	return ""
+}
+
+func (x *Step) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *Step) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *Step) GetStartTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.StartTime
+	}
+	return nil
+}
+
+func (x *Step) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *Step) GetDuration() int64 {
+	if x != nil {
+		return x.Duration
+	}
+	return 0
+}
+
+func (x *Step) GetMetadata() map[string]string {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *Step) GetParentStepId() string {
+	if x != nil {
+		return x.ParentStepId
+	}
+	return ""
+}
+
+func (x *Step) GetSubSteps() []*Step {
+	if x != nil {
+		return x.SubSteps
+	}
+	return nil
+}
+
+func (x *Step) GetWorkerIndex() string {
+	if x != nil {
+		return x.WorkerIndex
+	}
+	return ""
+}
+
+func (x *Step) GetStatus() common.TestStatus {
+	if x != nil {
+		return x.Status
+	}
+	return common.TestStatus(0)
+}
+
+func (x *Step) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+func (x *Step) GetLocation() string {
+	if x != nil {
+		return x.Location
+	}
+	return ""
+}
+
+type TestResult struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                                                       // Unique identifier for the test result
+	TestId        string                 `protobuf:"bytes,2,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`                                                                 // Reference to the test case
+	Title         string                 `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`                                                                                 // Title of the test result
+	Status        common.TestStatus      `protobuf:"varint,4,opt,name=status,proto3,enum=testsystem.v1.common.TestStatus" json:"status,omitempty"`                                         // Result status (e.g., "passed", "failed", "skipped")
+	StartTime     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`                                                        // Start time of the test execution
+	Attachments   []*common.Attachment   `protobuf:"bytes,6,rep,name=attachments,proto3" json:"attachments,omitempty"`                                                                     // Attachments related to the test result
+	ErrorMessage  string                 `protobuf:"bytes,7,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`                                               // Error message if the test failed
+	StackTrace    string                 `protobuf:"bytes,8,opt,name=stack_trace,json=stackTrace,proto3" json:"stack_trace,omitempty"`                                                     // Stack trace if applicable
+	Metadata      map[string]string      `protobuf:"bytes,9,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Additional metadata for the test result
+	Errors        []string               `protobuf:"bytes,11,rep,name=errors,proto3" json:"errors,omitempty"`                                                                              // List of error messages if any
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TestResult) Reset() {
+	*x = TestResult{}
+	mi := &file_testsystem_v1_entities_entities_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TestResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TestResult) ProtoMessage() {}
+
+func (x *TestResult) ProtoReflect() protoreflect.Message {
+	mi := &file_testsystem_v1_entities_entities_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TestResult.ProtoReflect.Descriptor instead.
+func (*TestResult) Descriptor() ([]byte, []int) {
+	return file_testsystem_v1_entities_entities_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *TestResult) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *TestResult) GetTestId() string {
+	if x != nil {
+		return x.TestId
+	}
+	return ""
+}
+
+func (x *TestResult) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *TestResult) GetStatus() common.TestStatus {
+	if x != nil {
+		return x.Status
+	}
+	return common.TestStatus(0)
+}
+
+func (x *TestResult) GetStartTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.StartTime
+	}
+	return nil
+}
+
+func (x *TestResult) GetAttachments() []*common.Attachment {
+	if x != nil {
+		return x.Attachments
+	}
+	return nil
+}
+
+func (x *TestResult) GetErrorMessage() string {
+	if x != nil {
+		return x.ErrorMessage
+	}
+	return ""
+}
+
+func (x *TestResult) GetStackTrace() string {
+	if x != nil {
+		return x.StackTrace
+	}
+	return ""
+}
+
+func (x *TestResult) GetMetadata() map[string]string {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *TestResult) GetErrors() []string {
+	if x != nil {
+		return x.Errors
+	}
+	return nil
+}
+
 var File_testsystem_v1_entities_entities_proto protoreflect.FileDescriptor
 
 const file_testsystem_v1_entities_entities_proto_rawDesc = "" +
 	"\n" +
-	"%testsystem/v1/entities/entities.proto\x12\x16testsystem.v1.entities\"\xa3\x02\n" +
-	"\n" +
-	"TestScript\x12\x0e\n" +
+	"%testsystem/v1/entities/entities.proto\x12\x16testsystem.v1.entities\x1a!testsystem/v1/common/common.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8d\x03\n" +
+	"\bTestCase\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
-	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x14\n" +
-	"\x05steps\x18\x04 \x03(\tR\x05steps\x12L\n" +
-	"\bmetadata\x18\x05 \x03(\v20.testsystem.v1.entities.TestScript.MetadataEntryR\bmetadata\x12 \n" +
-	"\tis_active\x18\x06 \x01(\bH\x00R\bisActive\x88\x01\x01\x1a;\n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x122\n" +
+	"\x05steps\x18\x04 \x03(\v2\x1c.testsystem.v1.entities.StepR\x05steps\x12J\n" +
+	"\bmetadata\x18\x05 \x03(\v2..testsystem.v1.entities.TestCase.MetadataEntryR\bmetadata\x128\n" +
+	"\x06status\x18\x06 \x01(\x0e2 .testsystem.v1.common.TestStatusR\x06status\x12D\n" +
+	"\fparent_suite\x18\a \x01(\v2!.testsystem.v1.entities.TestSuiteR\vparentSuite\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01B\f\n" +
-	"\n" +
-	"_is_active\"\xdb\x02\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xee\x03\n" +
 	"\tTestSuite\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12<\n" +
-	"\ascripts\x18\x03 \x03(\v2\".testsystem.v1.entities.TestScriptR\ascripts\x12 \n" +
-	"\vdescription\x18\x04 \x01(\tR\vdescription\x12K\n" +
-	"\bmetadata\x18\x05 \x03(\v2/.testsystem.v1.entities.TestSuite.MetadataEntryR\bmetadata\x12@\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x126\n" +
+	"\x05tests\x18\x03 \x03(\v2 .testsystem.v1.entities.TestCaseR\x05tests\x12@\n" +
 	"\n" +
-	"sub_suites\x18\x06 \x03(\v2!.testsystem.v1.entities.TestSuiteR\tsubSuites\x1a;\n" +
+	"sub_suites\x18\x04 \x03(\v2!.testsystem.v1.entities.TestSuiteR\tsubSuites\x12 \n" +
+	"\vdescription\x18\x05 \x01(\tR\vdescription\x12\x1a\n" +
+	"\blocation\x18\x06 \x01(\tR\blocation\x12K\n" +
+	"\bmetadata\x18\a \x03(\v2/.testsystem.v1.entities.TestSuite.MetadataEntryR\bmetadata\x125\n" +
+	"\x04type\x18\b \x01(\x0e2!.testsystem.v1.entities.SuiteTypeR\x04type\x12D\n" +
+	"\fparent_suite\x18\t \x01(\v2!.testsystem.v1.entities.TestSuiteR\vparentSuite\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01Bd\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xc7\x04\n" +
+	"\x04Step\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\atest_id\x18\x02 \x01(\tR\x06testId\x12\x14\n" +
+	"\x05title\x18\x03 \x01(\tR\x05title\x12 \n" +
+	"\vdescription\x18\x04 \x01(\tR\vdescription\x129\n" +
+	"\n" +
+	"start_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x12\x12\n" +
+	"\x04type\x18\x06 \x01(\tR\x04type\x12\x1a\n" +
+	"\bduration\x18\a \x01(\x03R\bduration\x12F\n" +
+	"\bmetadata\x18\b \x03(\v2*.testsystem.v1.entities.Step.MetadataEntryR\bmetadata\x12$\n" +
+	"\x0eparent_step_id\x18\t \x01(\tR\fparentStepId\x129\n" +
+	"\tsub_steps\x18\n" +
+	" \x03(\v2\x1c.testsystem.v1.entities.StepR\bsubSteps\x12!\n" +
+	"\fworker_index\x18\v \x01(\tR\vworkerIndex\x128\n" +
+	"\x06status\x18\f \x01(\x0e2 .testsystem.v1.common.TestStatusR\x06status\x12\x14\n" +
+	"\x05error\x18\r \x01(\tR\x05error\x12\x1a\n" +
+	"\blocation\x18\x0e \x01(\tR\blocation\x1a;\n" +
+	"\rMetadataEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xed\x03\n" +
+	"\n" +
+	"TestResult\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\atest_id\x18\x02 \x01(\tR\x06testId\x12\x14\n" +
+	"\x05title\x18\x03 \x01(\tR\x05title\x128\n" +
+	"\x06status\x18\x04 \x01(\x0e2 .testsystem.v1.common.TestStatusR\x06status\x129\n" +
+	"\n" +
+	"start_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x12B\n" +
+	"\vattachments\x18\x06 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\x12#\n" +
+	"\rerror_message\x18\a \x01(\tR\ferrorMessage\x12\x1f\n" +
+	"\vstack_trace\x18\b \x01(\tR\n" +
+	"stackTrace\x12L\n" +
+	"\bmetadata\x18\t \x03(\v20.testsystem.v1.entities.TestResult.MetadataEntryR\bmetadata\x12\x16\n" +
+	"\x06errors\x18\v \x03(\tR\x06errors\x1a;\n" +
+	"\rMetadataEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*0\n" +
+	"\tSuiteType\x12\b\n" +
+	"\x04ROOT\x10\x00\x12\v\n" +
+	"\aPROJECT\x10\x01\x12\f\n" +
+	"\bSUBSUITE\x10\x02Bd\n" +
 	"'com.stanterprise.testsystem.v1.entitiesP\x01Z7github.com/stanterprise/proto-go/testsystem/v1/entitiesb\x06proto3"
 
 var (
@@ -232,23 +621,45 @@ func file_testsystem_v1_entities_entities_proto_rawDescGZIP() []byte {
 	return file_testsystem_v1_entities_entities_proto_rawDescData
 }
 
-var file_testsystem_v1_entities_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_testsystem_v1_entities_entities_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_testsystem_v1_entities_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_testsystem_v1_entities_entities_proto_goTypes = []any{
-	(*TestScript)(nil), // 0: testsystem.v1.entities.TestScript
-	(*TestSuite)(nil),  // 1: testsystem.v1.entities.TestSuite
-	nil,                // 2: testsystem.v1.entities.TestScript.MetadataEntry
-	nil,                // 3: testsystem.v1.entities.TestSuite.MetadataEntry
+	(SuiteType)(0),                // 0: testsystem.v1.entities.SuiteType
+	(*TestCase)(nil),              // 1: testsystem.v1.entities.TestCase
+	(*TestSuite)(nil),             // 2: testsystem.v1.entities.TestSuite
+	(*Step)(nil),                  // 3: testsystem.v1.entities.Step
+	(*TestResult)(nil),            // 4: testsystem.v1.entities.TestResult
+	nil,                           // 5: testsystem.v1.entities.TestCase.MetadataEntry
+	nil,                           // 6: testsystem.v1.entities.TestSuite.MetadataEntry
+	nil,                           // 7: testsystem.v1.entities.Step.MetadataEntry
+	nil,                           // 8: testsystem.v1.entities.TestResult.MetadataEntry
+	(common.TestStatus)(0),        // 9: testsystem.v1.common.TestStatus
+	(*timestamppb.Timestamp)(nil), // 10: google.protobuf.Timestamp
+	(*common.Attachment)(nil),     // 11: testsystem.v1.common.Attachment
 }
 var file_testsystem_v1_entities_entities_proto_depIdxs = []int32{
-	2, // 0: testsystem.v1.entities.TestScript.metadata:type_name -> testsystem.v1.entities.TestScript.MetadataEntry
-	0, // 1: testsystem.v1.entities.TestSuite.scripts:type_name -> testsystem.v1.entities.TestScript
-	3, // 2: testsystem.v1.entities.TestSuite.metadata:type_name -> testsystem.v1.entities.TestSuite.MetadataEntry
-	1, // 3: testsystem.v1.entities.TestSuite.sub_suites:type_name -> testsystem.v1.entities.TestSuite
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	3,  // 0: testsystem.v1.entities.TestCase.steps:type_name -> testsystem.v1.entities.Step
+	5,  // 1: testsystem.v1.entities.TestCase.metadata:type_name -> testsystem.v1.entities.TestCase.MetadataEntry
+	9,  // 2: testsystem.v1.entities.TestCase.status:type_name -> testsystem.v1.common.TestStatus
+	2,  // 3: testsystem.v1.entities.TestCase.parent_suite:type_name -> testsystem.v1.entities.TestSuite
+	1,  // 4: testsystem.v1.entities.TestSuite.tests:type_name -> testsystem.v1.entities.TestCase
+	2,  // 5: testsystem.v1.entities.TestSuite.sub_suites:type_name -> testsystem.v1.entities.TestSuite
+	6,  // 6: testsystem.v1.entities.TestSuite.metadata:type_name -> testsystem.v1.entities.TestSuite.MetadataEntry
+	0,  // 7: testsystem.v1.entities.TestSuite.type:type_name -> testsystem.v1.entities.SuiteType
+	2,  // 8: testsystem.v1.entities.TestSuite.parent_suite:type_name -> testsystem.v1.entities.TestSuite
+	10, // 9: testsystem.v1.entities.Step.start_time:type_name -> google.protobuf.Timestamp
+	7,  // 10: testsystem.v1.entities.Step.metadata:type_name -> testsystem.v1.entities.Step.MetadataEntry
+	3,  // 11: testsystem.v1.entities.Step.sub_steps:type_name -> testsystem.v1.entities.Step
+	9,  // 12: testsystem.v1.entities.Step.status:type_name -> testsystem.v1.common.TestStatus
+	9,  // 13: testsystem.v1.entities.TestResult.status:type_name -> testsystem.v1.common.TestStatus
+	10, // 14: testsystem.v1.entities.TestResult.start_time:type_name -> google.protobuf.Timestamp
+	11, // 15: testsystem.v1.entities.TestResult.attachments:type_name -> testsystem.v1.common.Attachment
+	8,  // 16: testsystem.v1.entities.TestResult.metadata:type_name -> testsystem.v1.entities.TestResult.MetadataEntry
+	17, // [17:17] is the sub-list for method output_type
+	17, // [17:17] is the sub-list for method input_type
+	17, // [17:17] is the sub-list for extension type_name
+	17, // [17:17] is the sub-list for extension extendee
+	0,  // [0:17] is the sub-list for field type_name
 }
 
 func init() { file_testsystem_v1_entities_entities_proto_init() }
@@ -256,19 +667,19 @@ func file_testsystem_v1_entities_entities_proto_init() {
 	if File_testsystem_v1_entities_entities_proto != nil {
 		return
 	}
-	file_testsystem_v1_entities_entities_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_testsystem_v1_entities_entities_proto_rawDesc), len(file_testsystem_v1_entities_entities_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   4,
+			NumEnums:      1,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_testsystem_v1_entities_entities_proto_goTypes,
 		DependencyIndexes: file_testsystem_v1_entities_entities_proto_depIdxs,
+		EnumInfos:         file_testsystem_v1_entities_entities_proto_enumTypes,
 		MessageInfos:      file_testsystem_v1_entities_entities_proto_msgTypes,
 	}.Build()
 	File_testsystem_v1_entities_entities_proto = out.File
