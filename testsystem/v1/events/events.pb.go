@@ -8,6 +8,7 @@ package events
 
 import (
 	common "github.com/stanterprise/proto-go/testsystem/v1/common"
+	entities "github.com/stanterprise/proto-go/testsystem/v1/entities"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -23,30 +24,27 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type TestStartEventRequest struct {
+type TestBeginEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	TestId        string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
-	TestName      string                 `protobuf:"bytes,2,opt,name=test_name,json=testName,proto3" json:"test_name,omitempty"`
-	StartTime     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
-	Metadata      map[string]string      `protobuf:"bytes,4,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Additional metadata
+	TestCase      *entities.TestCase     `protobuf:"bytes,1,opt,name=test_case,json=testCase,proto3" json:"test_case,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TestStartEventRequest) Reset() {
-	*x = TestStartEventRequest{}
+func (x *TestBeginEventRequest) Reset() {
+	*x = TestBeginEventRequest{}
 	mi := &file_testsystem_v1_events_events_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TestStartEventRequest) String() string {
+func (x *TestBeginEventRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TestStartEventRequest) ProtoMessage() {}
+func (*TestBeginEventRequest) ProtoMessage() {}
 
-func (x *TestStartEventRequest) ProtoReflect() protoreflect.Message {
+func (x *TestBeginEventRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_testsystem_v1_events_events_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -58,65 +56,39 @@ func (x *TestStartEventRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TestStartEventRequest.ProtoReflect.Descriptor instead.
-func (*TestStartEventRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TestBeginEventRequest.ProtoReflect.Descriptor instead.
+func (*TestBeginEventRequest) Descriptor() ([]byte, []int) {
 	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *TestStartEventRequest) GetTestId() string {
+func (x *TestBeginEventRequest) GetTestCase() *entities.TestCase {
 	if x != nil {
-		return x.TestId
-	}
-	return ""
-}
-
-func (x *TestStartEventRequest) GetTestName() string {
-	if x != nil {
-		return x.TestName
-	}
-	return ""
-}
-
-func (x *TestStartEventRequest) GetStartTime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.StartTime
+		return x.TestCase
 	}
 	return nil
 }
 
-func (x *TestStartEventRequest) GetMetadata() map[string]string {
-	if x != nil {
-		return x.Metadata
-	}
-	return nil
-}
-
-type TestFinishEventRequest struct {
+type TestEndEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	TestId        string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
-	Status        common.TestStatus      `protobuf:"varint,2,opt,name=status,proto3,enum=testsystem.v1.common.TestStatus" json:"status,omitempty"`
-	EndTime       *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
-	Attachments   []*common.Attachment   `protobuf:"bytes,4,rep,name=attachments,proto3" json:"attachments,omitempty"`
-	ErrorMessage  string                 `protobuf:"bytes,5,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"` // If any
-	StackTrace    string                 `protobuf:"bytes,6,opt,name=stack_trace,json=stackTrace,proto3" json:"stack_trace,omitempty"`       // If any
+	TestCase      *entities.TestCase     `protobuf:"bytes,1,opt,name=test_case,json=testCase,proto3" json:"test_case,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TestFinishEventRequest) Reset() {
-	*x = TestFinishEventRequest{}
+func (x *TestEndEventRequest) Reset() {
+	*x = TestEndEventRequest{}
 	mi := &file_testsystem_v1_events_events_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TestFinishEventRequest) String() string {
+func (x *TestEndEventRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TestFinishEventRequest) ProtoMessage() {}
+func (*TestEndEventRequest) ProtoMessage() {}
 
-func (x *TestFinishEventRequest) ProtoReflect() protoreflect.Message {
+func (x *TestEndEventRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_testsystem_v1_events_events_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -128,144 +100,208 @@ func (x *TestFinishEventRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TestFinishEventRequest.ProtoReflect.Descriptor instead.
-func (*TestFinishEventRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TestEndEventRequest.ProtoReflect.Descriptor instead.
+func (*TestEndEventRequest) Descriptor() ([]byte, []int) {
 	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *TestFinishEventRequest) GetTestId() string {
+func (x *TestEndEventRequest) GetTestCase() *entities.TestCase {
+	if x != nil {
+		return x.TestCase
+	}
+	return nil
+}
+
+type StepBeginEventRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Step          *entities.Step         `protobuf:"bytes,1,opt,name=step,proto3" json:"step,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StepBeginEventRequest) Reset() {
+	*x = StepBeginEventRequest{}
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StepBeginEventRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StepBeginEventRequest) ProtoMessage() {}
+
+func (x *StepBeginEventRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StepBeginEventRequest.ProtoReflect.Descriptor instead.
+func (*StepBeginEventRequest) Descriptor() ([]byte, []int) {
+	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *StepBeginEventRequest) GetStep() *entities.Step {
+	if x != nil {
+		return x.Step
+	}
+	return nil
+}
+
+type StepEndEventRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Step          *entities.Step         `protobuf:"bytes,1,opt,name=step,proto3" json:"step,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StepEndEventRequest) Reset() {
+	*x = StepEndEventRequest{}
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StepEndEventRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StepEndEventRequest) ProtoMessage() {}
+
+func (x *StepEndEventRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StepEndEventRequest.ProtoReflect.Descriptor instead.
+func (*StepEndEventRequest) Descriptor() ([]byte, []int) {
+	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *StepEndEventRequest) GetStep() *entities.Step {
+	if x != nil {
+		return x.Step
+	}
+	return nil
+}
+
+type TestFailureEventRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	TestId         string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
+	FailureMessage string                 `protobuf:"bytes,2,opt,name=failure_message,json=failureMessage,proto3" json:"failure_message,omitempty"`
+	StackTrace     string                 `protobuf:"bytes,3,opt,name=stack_trace,json=stackTrace,proto3" json:"stack_trace,omitempty"`
+	Timestamp      *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Attachments    []*common.Attachment   `protobuf:"bytes,5,rep,name=attachments,proto3" json:"attachments,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *TestFailureEventRequest) Reset() {
+	*x = TestFailureEventRequest{}
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TestFailureEventRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TestFailureEventRequest) ProtoMessage() {}
+
+func (x *TestFailureEventRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TestFailureEventRequest.ProtoReflect.Descriptor instead.
+func (*TestFailureEventRequest) Descriptor() ([]byte, []int) {
+	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *TestFailureEventRequest) GetTestId() string {
 	if x != nil {
 		return x.TestId
 	}
 	return ""
 }
 
-func (x *TestFinishEventRequest) GetStatus() common.TestStatus {
+func (x *TestFailureEventRequest) GetFailureMessage() string {
 	if x != nil {
-		return x.Status
-	}
-	return common.TestStatus(0)
-}
-
-func (x *TestFinishEventRequest) GetEndTime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.EndTime
-	}
-	return nil
-}
-
-func (x *TestFinishEventRequest) GetAttachments() []*common.Attachment {
-	if x != nil {
-		return x.Attachments
-	}
-	return nil
-}
-
-func (x *TestFinishEventRequest) GetErrorMessage() string {
-	if x != nil {
-		return x.ErrorMessage
+		return x.FailureMessage
 	}
 	return ""
 }
 
-func (x *TestFinishEventRequest) GetStackTrace() string {
+func (x *TestFailureEventRequest) GetStackTrace() string {
 	if x != nil {
 		return x.StackTrace
 	}
 	return ""
 }
 
-type TestStepRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Description   string                 `protobuf:"bytes,1,opt,name=description,proto3" json:"description,omitempty"`
-	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	Status        common.TestStatus      `protobuf:"varint,3,opt,name=status,proto3,enum=testsystem.v1.common.TestStatus" json:"status,omitempty"`
-	Attachments   []*common.Attachment   `protobuf:"bytes,4,rep,name=attachments,proto3" json:"attachments,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TestStepRequest) Reset() {
-	*x = TestStepRequest{}
-	mi := &file_testsystem_v1_events_events_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TestStepRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TestStepRequest) ProtoMessage() {}
-
-func (x *TestStepRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_testsystem_v1_events_events_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TestStepRequest.ProtoReflect.Descriptor instead.
-func (*TestStepRequest) Descriptor() ([]byte, []int) {
-	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *TestStepRequest) GetDescription() string {
-	if x != nil {
-		return x.Description
-	}
-	return ""
-}
-
-func (x *TestStepRequest) GetTimestamp() *timestamppb.Timestamp {
+func (x *TestFailureEventRequest) GetTimestamp() *timestamppb.Timestamp {
 	if x != nil {
 		return x.Timestamp
 	}
 	return nil
 }
 
-func (x *TestStepRequest) GetStatus() common.TestStatus {
-	if x != nil {
-		return x.Status
-	}
-	return common.TestStatus(0)
-}
-
-func (x *TestStepRequest) GetAttachments() []*common.Attachment {
+func (x *TestFailureEventRequest) GetAttachments() []*common.Attachment {
 	if x != nil {
 		return x.Attachments
 	}
 	return nil
 }
 
-type TestStepEventRequest struct {
+type TestErrorEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TestId        string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
-	Steps         []*TestStepRequest     `protobuf:"bytes,2,rep,name=steps,proto3" json:"steps,omitempty"`
+	ErrorMessage  string                 `protobuf:"bytes,2,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+	StackTrace    string                 `protobuf:"bytes,3,opt,name=stack_trace,json=stackTrace,proto3" json:"stack_trace,omitempty"`
+	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Attachments   []*common.Attachment   `protobuf:"bytes,5,rep,name=attachments,proto3" json:"attachments,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TestStepEventRequest) Reset() {
-	*x = TestStepEventRequest{}
-	mi := &file_testsystem_v1_events_events_proto_msgTypes[3]
+func (x *TestErrorEventRequest) Reset() {
+	*x = TestErrorEventRequest{}
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TestStepEventRequest) String() string {
+func (x *TestErrorEventRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TestStepEventRequest) ProtoMessage() {}
+func (*TestErrorEventRequest) ProtoMessage() {}
 
-func (x *TestStepEventRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_testsystem_v1_events_events_proto_msgTypes[3]
+func (x *TestErrorEventRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -276,21 +312,302 @@ func (x *TestStepEventRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TestStepEventRequest.ProtoReflect.Descriptor instead.
-func (*TestStepEventRequest) Descriptor() ([]byte, []int) {
-	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{3}
+// Deprecated: Use TestErrorEventRequest.ProtoReflect.Descriptor instead.
+func (*TestErrorEventRequest) Descriptor() ([]byte, []int) {
+	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *TestStepEventRequest) GetTestId() string {
+func (x *TestErrorEventRequest) GetTestId() string {
 	if x != nil {
 		return x.TestId
 	}
 	return ""
 }
 
-func (x *TestStepEventRequest) GetSteps() []*TestStepRequest {
+func (x *TestErrorEventRequest) GetErrorMessage() string {
 	if x != nil {
-		return x.Steps
+		return x.ErrorMessage
+	}
+	return ""
+}
+
+func (x *TestErrorEventRequest) GetStackTrace() string {
+	if x != nil {
+		return x.StackTrace
+	}
+	return ""
+}
+
+func (x *TestErrorEventRequest) GetTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Timestamp
+	}
+	return nil
+}
+
+func (x *TestErrorEventRequest) GetAttachments() []*common.Attachment {
+	if x != nil {
+		return x.Attachments
+	}
+	return nil
+}
+
+type StdErrorEventRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TestId        string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StdErrorEventRequest) Reset() {
+	*x = StdErrorEventRequest{}
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StdErrorEventRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StdErrorEventRequest) ProtoMessage() {}
+
+func (x *StdErrorEventRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StdErrorEventRequest.ProtoReflect.Descriptor instead.
+func (*StdErrorEventRequest) Descriptor() ([]byte, []int) {
+	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *StdErrorEventRequest) GetTestId() string {
+	if x != nil {
+		return x.TestId
+	}
+	return ""
+}
+
+func (x *StdErrorEventRequest) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *StdErrorEventRequest) GetTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Timestamp
+	}
+	return nil
+}
+
+type StdOutputEventRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TestId        string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StdOutputEventRequest) Reset() {
+	*x = StdOutputEventRequest{}
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StdOutputEventRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StdOutputEventRequest) ProtoMessage() {}
+
+func (x *StdOutputEventRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StdOutputEventRequest.ProtoReflect.Descriptor instead.
+func (*StdOutputEventRequest) Descriptor() ([]byte, []int) {
+	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *StdOutputEventRequest) GetTestId() string {
+	if x != nil {
+		return x.TestId
+	}
+	return ""
+}
+
+func (x *StdOutputEventRequest) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *StdOutputEventRequest) GetTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Timestamp
+	}
+	return nil
+}
+
+type SuiteBeginEventRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Suite         *entities.TestSuite    `protobuf:"bytes,1,opt,name=suite,proto3" json:"suite,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SuiteBeginEventRequest) Reset() {
+	*x = SuiteBeginEventRequest{}
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SuiteBeginEventRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SuiteBeginEventRequest) ProtoMessage() {}
+
+func (x *SuiteBeginEventRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SuiteBeginEventRequest.ProtoReflect.Descriptor instead.
+func (*SuiteBeginEventRequest) Descriptor() ([]byte, []int) {
+	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *SuiteBeginEventRequest) GetSuite() *entities.TestSuite {
+	if x != nil {
+		return x.Suite
+	}
+	return nil
+}
+
+type SuiteEndEventRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Suite         *entities.TestSuite    `protobuf:"bytes,1,opt,name=suite,proto3" json:"suite,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SuiteEndEventRequest) Reset() {
+	*x = SuiteEndEventRequest{}
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SuiteEndEventRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SuiteEndEventRequest) ProtoMessage() {}
+
+func (x *SuiteEndEventRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SuiteEndEventRequest.ProtoReflect.Descriptor instead.
+func (*SuiteEndEventRequest) Descriptor() ([]byte, []int) {
+	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *SuiteEndEventRequest) GetSuite() *entities.TestSuite {
+	if x != nil {
+		return x.Suite
+	}
+	return nil
+}
+
+type HeartbeatEventRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SourceId      string                 `protobuf:"bytes,1,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"` // Identifier for the source sending the heartbeat
+	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HeartbeatEventRequest) Reset() {
+	*x = HeartbeatEventRequest{}
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HeartbeatEventRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HeartbeatEventRequest) ProtoMessage() {}
+
+func (x *HeartbeatEventRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HeartbeatEventRequest.ProtoReflect.Descriptor instead.
+func (*HeartbeatEventRequest) Descriptor() ([]byte, []int) {
+	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *HeartbeatEventRequest) GetSourceId() string {
+	if x != nil {
+		return x.SourceId
+	}
+	return ""
+}
+
+func (x *HeartbeatEventRequest) GetTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Timestamp
 	}
 	return nil
 }
@@ -299,32 +616,44 @@ var File_testsystem_v1_events_events_proto protoreflect.FileDescriptor
 
 const file_testsystem_v1_events_events_proto_rawDesc = "" +
 	"\n" +
-	"!testsystem/v1/events/events.proto\x12\x14testsystem.v1.events\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!testsystem/v1/common/common.proto\"\x9c\x02\n" +
-	"\x15TestStartEventRequest\x12\x17\n" +
-	"\atest_id\x18\x01 \x01(\tR\x06testId\x12\x1b\n" +
-	"\ttest_name\x18\x02 \x01(\tR\btestName\x129\n" +
-	"\n" +
-	"start_time\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x12U\n" +
-	"\bmetadata\x18\x04 \x03(\v29.testsystem.v1.events.TestStartEventRequest.MetadataEntryR\bmetadata\x1a;\n" +
-	"\rMetadataEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xac\x02\n" +
-	"\x16TestFinishEventRequest\x12\x17\n" +
-	"\atest_id\x18\x01 \x01(\tR\x06testId\x128\n" +
-	"\x06status\x18\x02 \x01(\x0e2 .testsystem.v1.common.TestStatusR\x06status\x125\n" +
-	"\bend_time\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12B\n" +
-	"\vattachments\x18\x04 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\x12#\n" +
-	"\rerror_message\x18\x05 \x01(\tR\ferrorMessage\x12\x1f\n" +
-	"\vstack_trace\x18\x06 \x01(\tR\n" +
-	"stackTrace\"\xeb\x01\n" +
-	"\x0fTestStepRequest\x12 \n" +
-	"\vdescription\x18\x01 \x01(\tR\vdescription\x128\n" +
-	"\ttimestamp\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x128\n" +
-	"\x06status\x18\x03 \x01(\x0e2 .testsystem.v1.common.TestStatusR\x06status\x12B\n" +
-	"\vattachments\x18\x04 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\"l\n" +
-	"\x14TestStepEventRequest\x12\x17\n" +
-	"\atest_id\x18\x01 \x01(\tR\x06testId\x12;\n" +
-	"\x05steps\x18\x02 \x03(\v2%.testsystem.v1.events.TestStepRequestR\x05stepsB`\n" +
+	"!testsystem/v1/events/events.proto\x12\x14testsystem.v1.events\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!testsystem/v1/common/common.proto\x1a%testsystem/v1/entities/entities.proto\"V\n" +
+	"\x15TestBeginEventRequest\x12=\n" +
+	"\ttest_case\x18\x01 \x01(\v2 .testsystem.v1.entities.TestCaseR\btestCase\"T\n" +
+	"\x13TestEndEventRequest\x12=\n" +
+	"\ttest_case\x18\x01 \x01(\v2 .testsystem.v1.entities.TestCaseR\btestCase\"I\n" +
+	"\x15StepBeginEventRequest\x120\n" +
+	"\x04step\x18\x01 \x01(\v2\x1c.testsystem.v1.entities.StepR\x04step\"G\n" +
+	"\x13StepEndEventRequest\x120\n" +
+	"\x04step\x18\x01 \x01(\v2\x1c.testsystem.v1.entities.StepR\x04step\"\xfa\x01\n" +
+	"\x17TestFailureEventRequest\x12\x17\n" +
+	"\atest_id\x18\x01 \x01(\tR\x06testId\x12'\n" +
+	"\x0ffailure_message\x18\x02 \x01(\tR\x0efailureMessage\x12\x1f\n" +
+	"\vstack_trace\x18\x03 \x01(\tR\n" +
+	"stackTrace\x128\n" +
+	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12B\n" +
+	"\vattachments\x18\x05 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\"\xf4\x01\n" +
+	"\x15TestErrorEventRequest\x12\x17\n" +
+	"\atest_id\x18\x01 \x01(\tR\x06testId\x12#\n" +
+	"\rerror_message\x18\x02 \x01(\tR\ferrorMessage\x12\x1f\n" +
+	"\vstack_trace\x18\x03 \x01(\tR\n" +
+	"stackTrace\x128\n" +
+	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12B\n" +
+	"\vattachments\x18\x05 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\"\x83\x01\n" +
+	"\x14StdErrorEventRequest\x12\x17\n" +
+	"\atest_id\x18\x01 \x01(\tR\x06testId\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x128\n" +
+	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"\x84\x01\n" +
+	"\x15StdOutputEventRequest\x12\x17\n" +
+	"\atest_id\x18\x01 \x01(\tR\x06testId\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x128\n" +
+	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"Q\n" +
+	"\x16SuiteBeginEventRequest\x127\n" +
+	"\x05suite\x18\x01 \x01(\v2!.testsystem.v1.entities.TestSuiteR\x05suite\"O\n" +
+	"\x14SuiteEndEventRequest\x127\n" +
+	"\x05suite\x18\x01 \x01(\v2!.testsystem.v1.entities.TestSuiteR\x05suite\"n\n" +
+	"\x15HeartbeatEventRequest\x12\x1b\n" +
+	"\tsource_id\x18\x01 \x01(\tR\bsourceId\x128\n" +
+	"\ttimestamp\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestampB`\n" +
 	"%com.stanterprise.testsystem.v1.eventsP\x01Z5github.com/stanterprise/proto-go/testsystem/v1/eventsb\x06proto3"
 
 var (
@@ -339,32 +668,44 @@ func file_testsystem_v1_events_events_proto_rawDescGZIP() []byte {
 	return file_testsystem_v1_events_events_proto_rawDescData
 }
 
-var file_testsystem_v1_events_events_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_testsystem_v1_events_events_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_testsystem_v1_events_events_proto_goTypes = []any{
-	(*TestStartEventRequest)(nil),  // 0: testsystem.v1.events.TestStartEventRequest
-	(*TestFinishEventRequest)(nil), // 1: testsystem.v1.events.TestFinishEventRequest
-	(*TestStepRequest)(nil),        // 2: testsystem.v1.events.TestStepRequest
-	(*TestStepEventRequest)(nil),   // 3: testsystem.v1.events.TestStepEventRequest
-	nil,                            // 4: testsystem.v1.events.TestStartEventRequest.MetadataEntry
-	(*timestamppb.Timestamp)(nil),  // 5: google.protobuf.Timestamp
-	(common.TestStatus)(0),         // 6: testsystem.v1.common.TestStatus
-	(*common.Attachment)(nil),      // 7: testsystem.v1.common.Attachment
+	(*TestBeginEventRequest)(nil),   // 0: testsystem.v1.events.TestBeginEventRequest
+	(*TestEndEventRequest)(nil),     // 1: testsystem.v1.events.TestEndEventRequest
+	(*StepBeginEventRequest)(nil),   // 2: testsystem.v1.events.StepBeginEventRequest
+	(*StepEndEventRequest)(nil),     // 3: testsystem.v1.events.StepEndEventRequest
+	(*TestFailureEventRequest)(nil), // 4: testsystem.v1.events.TestFailureEventRequest
+	(*TestErrorEventRequest)(nil),   // 5: testsystem.v1.events.TestErrorEventRequest
+	(*StdErrorEventRequest)(nil),    // 6: testsystem.v1.events.StdErrorEventRequest
+	(*StdOutputEventRequest)(nil),   // 7: testsystem.v1.events.StdOutputEventRequest
+	(*SuiteBeginEventRequest)(nil),  // 8: testsystem.v1.events.SuiteBeginEventRequest
+	(*SuiteEndEventRequest)(nil),    // 9: testsystem.v1.events.SuiteEndEventRequest
+	(*HeartbeatEventRequest)(nil),   // 10: testsystem.v1.events.HeartbeatEventRequest
+	(*entities.TestCase)(nil),       // 11: testsystem.v1.entities.TestCase
+	(*entities.Step)(nil),           // 12: testsystem.v1.entities.Step
+	(*timestamppb.Timestamp)(nil),   // 13: google.protobuf.Timestamp
+	(*common.Attachment)(nil),       // 14: testsystem.v1.common.Attachment
+	(*entities.TestSuite)(nil),      // 15: testsystem.v1.entities.TestSuite
 }
 var file_testsystem_v1_events_events_proto_depIdxs = []int32{
-	5, // 0: testsystem.v1.events.TestStartEventRequest.start_time:type_name -> google.protobuf.Timestamp
-	4, // 1: testsystem.v1.events.TestStartEventRequest.metadata:type_name -> testsystem.v1.events.TestStartEventRequest.MetadataEntry
-	6, // 2: testsystem.v1.events.TestFinishEventRequest.status:type_name -> testsystem.v1.common.TestStatus
-	5, // 3: testsystem.v1.events.TestFinishEventRequest.end_time:type_name -> google.protobuf.Timestamp
-	7, // 4: testsystem.v1.events.TestFinishEventRequest.attachments:type_name -> testsystem.v1.common.Attachment
-	5, // 5: testsystem.v1.events.TestStepRequest.timestamp:type_name -> google.protobuf.Timestamp
-	6, // 6: testsystem.v1.events.TestStepRequest.status:type_name -> testsystem.v1.common.TestStatus
-	7, // 7: testsystem.v1.events.TestStepRequest.attachments:type_name -> testsystem.v1.common.Attachment
-	2, // 8: testsystem.v1.events.TestStepEventRequest.steps:type_name -> testsystem.v1.events.TestStepRequest
-	9, // [9:9] is the sub-list for method output_type
-	9, // [9:9] is the sub-list for method input_type
-	9, // [9:9] is the sub-list for extension type_name
-	9, // [9:9] is the sub-list for extension extendee
-	0, // [0:9] is the sub-list for field type_name
+	11, // 0: testsystem.v1.events.TestBeginEventRequest.test_case:type_name -> testsystem.v1.entities.TestCase
+	11, // 1: testsystem.v1.events.TestEndEventRequest.test_case:type_name -> testsystem.v1.entities.TestCase
+	12, // 2: testsystem.v1.events.StepBeginEventRequest.step:type_name -> testsystem.v1.entities.Step
+	12, // 3: testsystem.v1.events.StepEndEventRequest.step:type_name -> testsystem.v1.entities.Step
+	13, // 4: testsystem.v1.events.TestFailureEventRequest.timestamp:type_name -> google.protobuf.Timestamp
+	14, // 5: testsystem.v1.events.TestFailureEventRequest.attachments:type_name -> testsystem.v1.common.Attachment
+	13, // 6: testsystem.v1.events.TestErrorEventRequest.timestamp:type_name -> google.protobuf.Timestamp
+	14, // 7: testsystem.v1.events.TestErrorEventRequest.attachments:type_name -> testsystem.v1.common.Attachment
+	13, // 8: testsystem.v1.events.StdErrorEventRequest.timestamp:type_name -> google.protobuf.Timestamp
+	13, // 9: testsystem.v1.events.StdOutputEventRequest.timestamp:type_name -> google.protobuf.Timestamp
+	15, // 10: testsystem.v1.events.SuiteBeginEventRequest.suite:type_name -> testsystem.v1.entities.TestSuite
+	15, // 11: testsystem.v1.events.SuiteEndEventRequest.suite:type_name -> testsystem.v1.entities.TestSuite
+	13, // 12: testsystem.v1.events.HeartbeatEventRequest.timestamp:type_name -> google.protobuf.Timestamp
+	13, // [13:13] is the sub-list for method output_type
+	13, // [13:13] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_testsystem_v1_events_events_proto_init() }
@@ -378,7 +719,7 @@ func file_testsystem_v1_events_events_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_testsystem_v1_events_events_proto_rawDesc), len(file_testsystem_v1_events_events_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
