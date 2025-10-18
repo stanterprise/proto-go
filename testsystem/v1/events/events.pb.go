@@ -26,7 +26,7 @@ const (
 
 type TestBeginEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	TestCase      *entities.TestCase     `protobuf:"bytes,1,opt,name=test_case,json=testCase,proto3" json:"test_case,omitempty"`
+	TestCase      *entities.TestCaseRun  `protobuf:"bytes,1,opt,name=test_case,json=testCase,proto3" json:"test_case,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -61,7 +61,7 @@ func (*TestBeginEventRequest) Descriptor() ([]byte, []int) {
 	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *TestBeginEventRequest) GetTestCase() *entities.TestCase {
+func (x *TestBeginEventRequest) GetTestCase() *entities.TestCaseRun {
 	if x != nil {
 		return x.TestCase
 	}
@@ -70,7 +70,7 @@ func (x *TestBeginEventRequest) GetTestCase() *entities.TestCase {
 
 type TestEndEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	TestCase      *entities.TestCase     `protobuf:"bytes,1,opt,name=test_case,json=testCase,proto3" json:"test_case,omitempty"`
+	TestCase      *entities.TestCaseRun  `protobuf:"bytes,1,opt,name=test_case,json=testCase,proto3" json:"test_case,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -105,7 +105,7 @@ func (*TestEndEventRequest) Descriptor() ([]byte, []int) {
 	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *TestEndEventRequest) GetTestCase() *entities.TestCase {
+func (x *TestEndEventRequest) GetTestCase() *entities.TestCaseRun {
 	if x != nil {
 		return x.TestCase
 	}
@@ -114,7 +114,7 @@ func (x *TestEndEventRequest) GetTestCase() *entities.TestCase {
 
 type StepBeginEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Step          *entities.Step         `protobuf:"bytes,1,opt,name=step,proto3" json:"step,omitempty"`
+	Step          *entities.StepRun      `protobuf:"bytes,1,opt,name=step,proto3" json:"step,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -149,7 +149,7 @@ func (*StepBeginEventRequest) Descriptor() ([]byte, []int) {
 	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *StepBeginEventRequest) GetStep() *entities.Step {
+func (x *StepBeginEventRequest) GetStep() *entities.StepRun {
 	if x != nil {
 		return x.Step
 	}
@@ -158,7 +158,7 @@ func (x *StepBeginEventRequest) GetStep() *entities.Step {
 
 type StepEndEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Step          *entities.Step         `protobuf:"bytes,1,opt,name=step,proto3" json:"step,omitempty"`
+	Step          *entities.StepRun      `protobuf:"bytes,1,opt,name=step,proto3" json:"step,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -193,7 +193,7 @@ func (*StepEndEventRequest) Descriptor() ([]byte, []int) {
 	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *StepEndEventRequest) GetStep() *entities.Step {
+func (x *StepEndEventRequest) GetStep() *entities.StepRun {
 	if x != nil {
 		return x.Step
 	}
@@ -474,7 +474,7 @@ func (x *StdOutputEventRequest) GetTimestamp() *timestamppb.Timestamp {
 
 type SuiteBeginEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Suite         *entities.TestSuite    `protobuf:"bytes,1,opt,name=suite,proto3" json:"suite,omitempty"`
+	Suite         *entities.TestSuiteRun `protobuf:"bytes,1,opt,name=suite,proto3" json:"suite,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -509,7 +509,7 @@ func (*SuiteBeginEventRequest) Descriptor() ([]byte, []int) {
 	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *SuiteBeginEventRequest) GetSuite() *entities.TestSuite {
+func (x *SuiteBeginEventRequest) GetSuite() *entities.TestSuiteRun {
 	if x != nil {
 		return x.Suite
 	}
@@ -518,7 +518,7 @@ func (x *SuiteBeginEventRequest) GetSuite() *entities.TestSuite {
 
 type SuiteEndEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Suite         *entities.TestSuite    `protobuf:"bytes,1,opt,name=suite,proto3" json:"suite,omitempty"`
+	Suite         *entities.TestSuiteRun `protobuf:"bytes,1,opt,name=suite,proto3" json:"suite,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -553,7 +553,7 @@ func (*SuiteEndEventRequest) Descriptor() ([]byte, []int) {
 	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *SuiteEndEventRequest) GetSuite() *entities.TestSuite {
+func (x *SuiteEndEventRequest) GetSuite() *entities.TestSuiteRun {
 	if x != nil {
 		return x.Suite
 	}
@@ -616,15 +616,15 @@ var File_testsystem_v1_events_events_proto protoreflect.FileDescriptor
 
 const file_testsystem_v1_events_events_proto_rawDesc = "" +
 	"\n" +
-	"!testsystem/v1/events/events.proto\x12\x14testsystem.v1.events\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!testsystem/v1/common/common.proto\x1a%testsystem/v1/entities/entities.proto\"V\n" +
-	"\x15TestBeginEventRequest\x12=\n" +
-	"\ttest_case\x18\x01 \x01(\v2 .testsystem.v1.entities.TestCaseR\btestCase\"T\n" +
-	"\x13TestEndEventRequest\x12=\n" +
-	"\ttest_case\x18\x01 \x01(\v2 .testsystem.v1.entities.TestCaseR\btestCase\"I\n" +
-	"\x15StepBeginEventRequest\x120\n" +
-	"\x04step\x18\x01 \x01(\v2\x1c.testsystem.v1.entities.StepR\x04step\"G\n" +
-	"\x13StepEndEventRequest\x120\n" +
-	"\x04step\x18\x01 \x01(\v2\x1c.testsystem.v1.entities.StepR\x04step\"\xfa\x01\n" +
+	"!testsystem/v1/events/events.proto\x12\x14testsystem.v1.events\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!testsystem/v1/common/common.proto\x1a&testsystem/v1/entities/test_case.proto\x1a'testsystem/v1/entities/test_suite.proto\"Y\n" +
+	"\x15TestBeginEventRequest\x12@\n" +
+	"\ttest_case\x18\x01 \x01(\v2#.testsystem.v1.entities.TestCaseRunR\btestCase\"W\n" +
+	"\x13TestEndEventRequest\x12@\n" +
+	"\ttest_case\x18\x01 \x01(\v2#.testsystem.v1.entities.TestCaseRunR\btestCase\"L\n" +
+	"\x15StepBeginEventRequest\x123\n" +
+	"\x04step\x18\x01 \x01(\v2\x1f.testsystem.v1.entities.StepRunR\x04step\"J\n" +
+	"\x13StepEndEventRequest\x123\n" +
+	"\x04step\x18\x01 \x01(\v2\x1f.testsystem.v1.entities.StepRunR\x04step\"\xfa\x01\n" +
 	"\x17TestFailureEventRequest\x12\x17\n" +
 	"\atest_id\x18\x01 \x01(\tR\x06testId\x12'\n" +
 	"\x0ffailure_message\x18\x02 \x01(\tR\x0efailureMessage\x12\x1f\n" +
@@ -646,11 +646,11 @@ const file_testsystem_v1_events_events_proto_rawDesc = "" +
 	"\x15StdOutputEventRequest\x12\x17\n" +
 	"\atest_id\x18\x01 \x01(\tR\x06testId\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x128\n" +
-	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"Q\n" +
-	"\x16SuiteBeginEventRequest\x127\n" +
-	"\x05suite\x18\x01 \x01(\v2!.testsystem.v1.entities.TestSuiteR\x05suite\"O\n" +
-	"\x14SuiteEndEventRequest\x127\n" +
-	"\x05suite\x18\x01 \x01(\v2!.testsystem.v1.entities.TestSuiteR\x05suite\"n\n" +
+	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"T\n" +
+	"\x16SuiteBeginEventRequest\x12:\n" +
+	"\x05suite\x18\x01 \x01(\v2$.testsystem.v1.entities.TestSuiteRunR\x05suite\"R\n" +
+	"\x14SuiteEndEventRequest\x12:\n" +
+	"\x05suite\x18\x01 \x01(\v2$.testsystem.v1.entities.TestSuiteRunR\x05suite\"n\n" +
 	"\x15HeartbeatEventRequest\x12\x1b\n" +
 	"\tsource_id\x18\x01 \x01(\tR\bsourceId\x128\n" +
 	"\ttimestamp\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestampB`\n" +
@@ -681,25 +681,25 @@ var file_testsystem_v1_events_events_proto_goTypes = []any{
 	(*SuiteBeginEventRequest)(nil),  // 8: testsystem.v1.events.SuiteBeginEventRequest
 	(*SuiteEndEventRequest)(nil),    // 9: testsystem.v1.events.SuiteEndEventRequest
 	(*HeartbeatEventRequest)(nil),   // 10: testsystem.v1.events.HeartbeatEventRequest
-	(*entities.TestCase)(nil),       // 11: testsystem.v1.entities.TestCase
-	(*entities.Step)(nil),           // 12: testsystem.v1.entities.Step
+	(*entities.TestCaseRun)(nil),    // 11: testsystem.v1.entities.TestCaseRun
+	(*entities.StepRun)(nil),        // 12: testsystem.v1.entities.StepRun
 	(*timestamppb.Timestamp)(nil),   // 13: google.protobuf.Timestamp
 	(*common.Attachment)(nil),       // 14: testsystem.v1.common.Attachment
-	(*entities.TestSuite)(nil),      // 15: testsystem.v1.entities.TestSuite
+	(*entities.TestSuiteRun)(nil),   // 15: testsystem.v1.entities.TestSuiteRun
 }
 var file_testsystem_v1_events_events_proto_depIdxs = []int32{
-	11, // 0: testsystem.v1.events.TestBeginEventRequest.test_case:type_name -> testsystem.v1.entities.TestCase
-	11, // 1: testsystem.v1.events.TestEndEventRequest.test_case:type_name -> testsystem.v1.entities.TestCase
-	12, // 2: testsystem.v1.events.StepBeginEventRequest.step:type_name -> testsystem.v1.entities.Step
-	12, // 3: testsystem.v1.events.StepEndEventRequest.step:type_name -> testsystem.v1.entities.Step
+	11, // 0: testsystem.v1.events.TestBeginEventRequest.test_case:type_name -> testsystem.v1.entities.TestCaseRun
+	11, // 1: testsystem.v1.events.TestEndEventRequest.test_case:type_name -> testsystem.v1.entities.TestCaseRun
+	12, // 2: testsystem.v1.events.StepBeginEventRequest.step:type_name -> testsystem.v1.entities.StepRun
+	12, // 3: testsystem.v1.events.StepEndEventRequest.step:type_name -> testsystem.v1.entities.StepRun
 	13, // 4: testsystem.v1.events.TestFailureEventRequest.timestamp:type_name -> google.protobuf.Timestamp
 	14, // 5: testsystem.v1.events.TestFailureEventRequest.attachments:type_name -> testsystem.v1.common.Attachment
 	13, // 6: testsystem.v1.events.TestErrorEventRequest.timestamp:type_name -> google.protobuf.Timestamp
 	14, // 7: testsystem.v1.events.TestErrorEventRequest.attachments:type_name -> testsystem.v1.common.Attachment
 	13, // 8: testsystem.v1.events.StdErrorEventRequest.timestamp:type_name -> google.protobuf.Timestamp
 	13, // 9: testsystem.v1.events.StdOutputEventRequest.timestamp:type_name -> google.protobuf.Timestamp
-	15, // 10: testsystem.v1.events.SuiteBeginEventRequest.suite:type_name -> testsystem.v1.entities.TestSuite
-	15, // 11: testsystem.v1.events.SuiteEndEventRequest.suite:type_name -> testsystem.v1.entities.TestSuite
+	15, // 10: testsystem.v1.events.SuiteBeginEventRequest.suite:type_name -> testsystem.v1.entities.TestSuiteRun
+	15, // 11: testsystem.v1.events.SuiteEndEventRequest.suite:type_name -> testsystem.v1.entities.TestSuiteRun
 	13, // 12: testsystem.v1.events.HeartbeatEventRequest.timestamp:type_name -> google.protobuf.Timestamp
 	13, // [13:13] is the sub-list for method output_type
 	13, // [13:13] is the sub-list for method input_type
