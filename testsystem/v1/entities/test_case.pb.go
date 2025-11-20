@@ -131,6 +131,10 @@ type TestCaseRun struct {
 	Metadata       map[string]string      `protobuf:"bytes,11,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Additional metadata for the test result
 	Errors         []string               `protobuf:"bytes,12,rep,name=errors,proto3" json:"errors,omitempty"`                                                                               // List of error messages if any
 	ActualTags     []string               `protobuf:"bytes,13,rep,name=actual_tags,json=actualTags,proto3" json:"actual_tags,omitempty"`                                                     // Actual tags associated with the test case during execution
+	Duration       *durationpb.Duration   `protobuf:"bytes,14,opt,name=duration,proto3" json:"duration,omitempty"`                                                                           // Duration of the test execution
+	RetryCount     int32                  `protobuf:"varint,15,opt,name=retry_count,json=retryCount,proto3" json:"retry_count,omitempty"`                                                    // Total number of retry attempts allowed for this test
+	RetryIndex     int32                  `protobuf:"varint,16,opt,name=retry_index,json=retryIndex,proto3" json:"retry_index,omitempty"`                                                    // Current retry attempt index (0 for first attempt)
+	Timeout        int32                  `protobuf:"varint,17,opt,name=timeout,proto3" json:"timeout,omitempty"`                                                                            // Timeout in milliseconds for this test
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -256,6 +260,34 @@ func (x *TestCaseRun) GetActualTags() []string {
 	return nil
 }
 
+func (x *TestCaseRun) GetDuration() *durationpb.Duration {
+	if x != nil {
+		return x.Duration
+	}
+	return nil
+}
+
+func (x *TestCaseRun) GetRetryCount() int32 {
+	if x != nil {
+		return x.RetryCount
+	}
+	return 0
+}
+
+func (x *TestCaseRun) GetRetryIndex() int32 {
+	if x != nil {
+		return x.RetryIndex
+	}
+	return 0
+}
+
+func (x *TestCaseRun) GetTimeout() int32 {
+	if x != nil {
+		return x.Timeout
+	}
+	return 0
+}
+
 type StepRun struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                                                       // Unique identifier for the step result
@@ -273,6 +305,7 @@ type StepRun struct {
 	Error         string                 `protobuf:"bytes,13,opt,name=error,proto3" json:"error,omitempty"`                                                                                // Error message if the step failed
 	Errors        []string               `protobuf:"bytes,14,rep,name=errors,proto3" json:"errors,omitempty"`                                                                              // List of all error messages observed during step execution, if any
 	Location      string                 `protobuf:"bytes,15,opt,name=location,proto3" json:"location,omitempty"`                                                                          // Location in the code where the step is defined
+	Category      string                 `protobuf:"bytes,16,opt,name=category,proto3" json:"category,omitempty"`                                                                          // Category of step (e.g., "hook", "fixture", "test.step")
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -412,6 +445,13 @@ func (x *StepRun) GetLocation() string {
 	return ""
 }
 
+func (x *StepRun) GetCategory() string {
+	if x != nil {
+		return x.Category
+	}
+	return ""
+}
+
 var File_testsystem_v1_entities_test_case_proto protoreflect.FileDescriptor
 
 const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
@@ -427,7 +467,7 @@ const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
 	"\x04tags\x18\a \x03(\tR\x04tags\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xd2\x04\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xe5\x05\n" +
 	"\vTestCaseRun\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\atest_id\x18\x02 \x01(\tR\x06testId\x12\x15\n" +
@@ -445,10 +485,16 @@ const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
 	"\bmetadata\x18\v \x03(\v21.testsystem.v1.entities.TestCaseRun.MetadataEntryR\bmetadata\x12\x16\n" +
 	"\x06errors\x18\f \x03(\tR\x06errors\x12\x1f\n" +
 	"\vactual_tags\x18\r \x03(\tR\n" +
-	"actualTags\x1a;\n" +
+	"actualTags\x125\n" +
+	"\bduration\x18\x0e \x01(\v2\x19.google.protobuf.DurationR\bduration\x12\x1f\n" +
+	"\vretry_count\x18\x0f \x01(\x05R\n" +
+	"retryCount\x12\x1f\n" +
+	"\vretry_index\x18\x10 \x01(\x05R\n" +
+	"retryIndex\x12\x18\n" +
+	"\atimeout\x18\x11 \x01(\x05R\atimeout\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xec\x04\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x88\x05\n" +
 	"\aStepRun\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
 	"\x06run_id\x18\x02 \x01(\tR\x05runId\x12'\n" +
@@ -466,7 +512,8 @@ const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
 	"\x06status\x18\f \x01(\x0e2 .testsystem.v1.common.TestStatusR\x06status\x12\x14\n" +
 	"\x05error\x18\r \x01(\tR\x05error\x12\x16\n" +
 	"\x06errors\x18\x0e \x03(\tR\x06errors\x12\x1a\n" +
-	"\blocation\x18\x0f \x01(\tR\blocation\x1a;\n" +
+	"\blocation\x18\x0f \x01(\tR\blocation\x12\x1a\n" +
+	"\bcategory\x18\x10 \x01(\tR\bcategory\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01Bd\n" +
@@ -504,15 +551,16 @@ var file_testsystem_v1_entities_test_case_proto_depIdxs = []int32{
 	7,  // 3: testsystem.v1.entities.TestCaseRun.start_time:type_name -> google.protobuf.Timestamp
 	8,  // 4: testsystem.v1.entities.TestCaseRun.attachments:type_name -> testsystem.v1.common.Attachment
 	4,  // 5: testsystem.v1.entities.TestCaseRun.metadata:type_name -> testsystem.v1.entities.TestCaseRun.MetadataEntry
-	7,  // 6: testsystem.v1.entities.StepRun.start_time:type_name -> google.protobuf.Timestamp
-	9,  // 7: testsystem.v1.entities.StepRun.duration:type_name -> google.protobuf.Duration
-	5,  // 8: testsystem.v1.entities.StepRun.metadata:type_name -> testsystem.v1.entities.StepRun.MetadataEntry
-	6,  // 9: testsystem.v1.entities.StepRun.status:type_name -> testsystem.v1.common.TestStatus
-	10, // [10:10] is the sub-list for method output_type
-	10, // [10:10] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	9,  // 6: testsystem.v1.entities.TestCaseRun.duration:type_name -> google.protobuf.Duration
+	7,  // 7: testsystem.v1.entities.StepRun.start_time:type_name -> google.protobuf.Timestamp
+	9,  // 8: testsystem.v1.entities.StepRun.duration:type_name -> google.protobuf.Duration
+	5,  // 9: testsystem.v1.entities.StepRun.metadata:type_name -> testsystem.v1.entities.StepRun.MetadataEntry
+	6,  // 10: testsystem.v1.entities.StepRun.status:type_name -> testsystem.v1.common.TestStatus
+	11, // [11:11] is the sub-list for method output_type
+	11, // [11:11] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_testsystem_v1_entities_test_case_proto_init() }

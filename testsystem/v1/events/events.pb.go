@@ -357,6 +357,7 @@ type StdErrorEventRequest struct {
 	TestId        string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	TestCaseRunId string                 `protobuf:"bytes,4,opt,name=test_case_run_id,json=testCaseRunId,proto3" json:"test_case_run_id,omitempty"` // Reference to the specific test case run
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -412,11 +413,19 @@ func (x *StdErrorEventRequest) GetTimestamp() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *StdErrorEventRequest) GetTestCaseRunId() string {
+	if x != nil {
+		return x.TestCaseRunId
+	}
+	return ""
+}
+
 type StdOutputEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TestId        string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	TestCaseRunId string                 `protobuf:"bytes,4,opt,name=test_case_run_id,json=testCaseRunId,proto3" json:"test_case_run_id,omitempty"` // Reference to the specific test case run
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -470,6 +479,13 @@ func (x *StdOutputEventRequest) GetTimestamp() *timestamppb.Timestamp {
 		return x.Timestamp
 	}
 	return nil
+}
+
+func (x *StdOutputEventRequest) GetTestCaseRunId() string {
+	if x != nil {
+		return x.TestCaseRunId
+	}
+	return ""
 }
 
 type SuiteBeginEventRequest struct {
@@ -638,15 +654,17 @@ const file_testsystem_v1_events_events_proto_rawDesc = "" +
 	"\vstack_trace\x18\x03 \x01(\tR\n" +
 	"stackTrace\x128\n" +
 	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12B\n" +
-	"\vattachments\x18\x05 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\"\x83\x01\n" +
+	"\vattachments\x18\x05 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\"\xac\x01\n" +
 	"\x14StdErrorEventRequest\x12\x17\n" +
 	"\atest_id\x18\x01 \x01(\tR\x06testId\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x128\n" +
-	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"\x84\x01\n" +
+	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12'\n" +
+	"\x10test_case_run_id\x18\x04 \x01(\tR\rtestCaseRunId\"\xad\x01\n" +
 	"\x15StdOutputEventRequest\x12\x17\n" +
 	"\atest_id\x18\x01 \x01(\tR\x06testId\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x128\n" +
-	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"T\n" +
+	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12'\n" +
+	"\x10test_case_run_id\x18\x04 \x01(\tR\rtestCaseRunId\"T\n" +
 	"\x16SuiteBeginEventRequest\x12:\n" +
 	"\x05suite\x18\x01 \x01(\v2$.testsystem.v1.entities.TestSuiteRunR\x05suite\"R\n" +
 	"\x14SuiteEndEventRequest\x12:\n" +

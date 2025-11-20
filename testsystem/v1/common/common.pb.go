@@ -25,11 +25,13 @@ const (
 type TestStatus int32
 
 const (
-	TestStatus_UNKNOWN TestStatus = 0
-	TestStatus_PASSED  TestStatus = 1
-	TestStatus_FAILED  TestStatus = 2
-	TestStatus_SKIPPED TestStatus = 3
-	TestStatus_BROKEN  TestStatus = 4
+	TestStatus_UNKNOWN     TestStatus = 0
+	TestStatus_PASSED      TestStatus = 1
+	TestStatus_FAILED      TestStatus = 2
+	TestStatus_SKIPPED     TestStatus = 3
+	TestStatus_BROKEN      TestStatus = 4
+	TestStatus_TIMEDOUT    TestStatus = 5 // Test execution exceeded timeout
+	TestStatus_INTERRUPTED TestStatus = 6 // Test execution was interrupted
 )
 
 // Enum value maps for TestStatus.
@@ -40,13 +42,17 @@ var (
 		2: "FAILED",
 		3: "SKIPPED",
 		4: "BROKEN",
+		5: "TIMEDOUT",
+		6: "INTERRUPTED",
 	}
 	TestStatus_value = map[string]int32{
-		"UNKNOWN": 0,
-		"PASSED":  1,
-		"FAILED":  2,
-		"SKIPPED": 3,
-		"BROKEN":  4,
+		"UNKNOWN":     0,
+		"PASSED":      1,
+		"FAILED":      2,
+		"SKIPPED":     3,
+		"BROKEN":      4,
+		"TIMEDOUT":    5,
+		"INTERRUPTED": 6,
 	}
 )
 
@@ -187,7 +193,7 @@ const file_testsystem_v1_common_common_proto_rawDesc = "" +
 	"\tmime_type\x18\x02 \x01(\tR\bmimeType\x12\x1a\n" +
 	"\acontent\x18\x03 \x01(\fH\x00R\acontent\x12\x12\n" +
 	"\x03uri\x18\x04 \x01(\tH\x00R\x03uriB\t\n" +
-	"\apayload*J\n" +
+	"\apayload*i\n" +
 	"\n" +
 	"TestStatus\x12\v\n" +
 	"\aUNKNOWN\x10\x00\x12\n" +
@@ -197,7 +203,9 @@ const file_testsystem_v1_common_common_proto_rawDesc = "" +
 	"\x06FAILED\x10\x02\x12\v\n" +
 	"\aSKIPPED\x10\x03\x12\n" +
 	"\n" +
-	"\x06BROKEN\x10\x04B`\n" +
+	"\x06BROKEN\x10\x04\x12\f\n" +
+	"\bTIMEDOUT\x10\x05\x12\x0f\n" +
+	"\vINTERRUPTED\x10\x06B`\n" +
 	"%com.stanterprise.testsystem.v1.commonP\x01Z5github.com/stanterprise/proto-go/testsystem/v1/commonb\x06proto3"
 
 var (
