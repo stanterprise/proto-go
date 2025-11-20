@@ -85,6 +85,7 @@ type TestSuiteRun struct {
 	Metadata        map[string]string      `protobuf:"bytes,8,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Additional metadata for the test run
 	TestSuiteSpecId string                 `protobuf:"bytes,9,opt,name=test_suite_spec_id,json=testSuiteSpecId,proto3" json:"test_suite_spec_id,omitempty"`                                  // Identifier for the test suite being run
 	InitiatedBy     string                 `protobuf:"bytes,10,opt,name=initiated_by,json=initiatedBy,proto3" json:"initiated_by,omitempty"`                                                 // Identifier for who initiated the test run
+	ProjectName     string                 `protobuf:"bytes,11,opt,name=project_name,json=projectName,proto3" json:"project_name,omitempty"`                                                 // Project name (e.g., browser/device configuration for Playwright)
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -189,6 +190,13 @@ func (x *TestSuiteRun) GetInitiatedBy() string {
 	return ""
 }
 
+func (x *TestSuiteRun) GetProjectName() string {
+	if x != nil {
+		return x.ProjectName
+	}
+	return ""
+}
+
 type TestSuiteSpec struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                                                       // Unique identifier for the test suite
@@ -203,6 +211,7 @@ type TestSuiteSpec struct {
 	ParentSuiteId string                 `protobuf:"bytes,10,opt,name=parent_suite_id,json=parentSuiteId,proto3" json:"parent_suite_id,omitempty"`                                         // Reference to the parent suite, if any
 	Author        string                 `protobuf:"bytes,11,opt,name=author,proto3" json:"author,omitempty"`                                                                              // Author of the test suite
 	Owner         string                 `protobuf:"bytes,12,opt,name=owner,proto3" json:"owner,omitempty"`                                                                                // Team or individual responsible for the test suite
+	Project       string                 `protobuf:"bytes,13,opt,name=project,proto3" json:"project,omitempty"`                                                                            // Project identifier (e.g., browser/device configuration for Playwright)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -321,11 +330,18 @@ func (x *TestSuiteSpec) GetOwner() string {
 	return ""
 }
 
+func (x *TestSuiteSpec) GetProject() string {
+	if x != nil {
+		return x.Project
+	}
+	return ""
+}
+
 var File_testsystem_v1_entities_test_suite_proto protoreflect.FileDescriptor
 
 const file_testsystem_v1_entities_test_suite_proto_rawDesc = "" +
 	"\n" +
-	"'testsystem/v1/entities/test_suite.proto\x12\x16testsystem.v1.entities\x1a!testsystem/v1/common/common.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\"\x94\x04\n" +
+	"'testsystem/v1/entities/test_suite.proto\x12\x16testsystem.v1.entities\x1a!testsystem/v1/common/common.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\"\xb7\x04\n" +
 	"\fTestSuiteRun\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
@@ -338,10 +354,11 @@ const file_testsystem_v1_entities_test_suite_proto_rawDesc = "" +
 	"\bmetadata\x18\b \x03(\v22.testsystem.v1.entities.TestSuiteRun.MetadataEntryR\bmetadata\x12+\n" +
 	"\x12test_suite_spec_id\x18\t \x01(\tR\x0ftestSuiteSpecId\x12!\n" +
 	"\finitiated_by\x18\n" +
-	" \x01(\tR\vinitiatedBy\x1a;\n" +
+	" \x01(\tR\vinitiatedBy\x12!\n" +
+	"\fproject_name\x18\v \x01(\tR\vprojectName\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xeb\x03\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x85\x04\n" +
 	"\rTestSuiteSpec\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x15\n" +
@@ -355,7 +372,8 @@ const file_testsystem_v1_entities_test_suite_proto_rawDesc = "" +
 	"\x0fparent_suite_id\x18\n" +
 	" \x01(\tR\rparentSuiteId\x12\x16\n" +
 	"\x06author\x18\v \x01(\tR\x06author\x12\x14\n" +
-	"\x05owner\x18\f \x01(\tR\x05owner\x1a;\n" +
+	"\x05owner\x18\f \x01(\tR\x05owner\x12\x18\n" +
+	"\aproject\x18\r \x01(\tR\aproject\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*0\n" +
