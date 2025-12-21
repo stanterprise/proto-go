@@ -207,6 +207,7 @@ type TestFailureEventRequest struct {
 	StackTrace     string                 `protobuf:"bytes,3,opt,name=stack_trace,json=stackTrace,proto3" json:"stack_trace,omitempty"`
 	Timestamp      *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	Attachments    []*common.Attachment   `protobuf:"bytes,5,rep,name=attachments,proto3" json:"attachments,omitempty"`
+	RunId          string                 `protobuf:"bytes,6,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -276,6 +277,13 @@ func (x *TestFailureEventRequest) GetAttachments() []*common.Attachment {
 	return nil
 }
 
+func (x *TestFailureEventRequest) GetRunId() string {
+	if x != nil {
+		return x.RunId
+	}
+	return ""
+}
+
 type TestErrorEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TestId        string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
@@ -283,6 +291,7 @@ type TestErrorEventRequest struct {
 	StackTrace    string                 `protobuf:"bytes,3,opt,name=stack_trace,json=stackTrace,proto3" json:"stack_trace,omitempty"`
 	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	Attachments   []*common.Attachment   `protobuf:"bytes,5,rep,name=attachments,proto3" json:"attachments,omitempty"`
+	RunId         string                 `protobuf:"bytes,6,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -352,12 +361,20 @@ func (x *TestErrorEventRequest) GetAttachments() []*common.Attachment {
 	return nil
 }
 
+func (x *TestErrorEventRequest) GetRunId() string {
+	if x != nil {
+		return x.RunId
+	}
+	return ""
+}
+
 type StdErrorEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TestId        string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	TestCaseRunId string                 `protobuf:"bytes,4,opt,name=test_case_run_id,json=testCaseRunId,proto3" json:"test_case_run_id,omitempty"` // Reference to the specific test case run
+	RunId         string                 `protobuf:"bytes,5,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -420,12 +437,20 @@ func (x *StdErrorEventRequest) GetTestCaseRunId() string {
 	return ""
 }
 
+func (x *StdErrorEventRequest) GetRunId() string {
+	if x != nil {
+		return x.RunId
+	}
+	return ""
+}
+
 type StdOutputEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TestId        string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	TestCaseRunId string                 `protobuf:"bytes,4,opt,name=test_case_run_id,json=testCaseRunId,proto3" json:"test_case_run_id,omitempty"` // Reference to the specific test case run
+	RunId         string                 `protobuf:"bytes,5,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -484,6 +509,13 @@ func (x *StdOutputEventRequest) GetTimestamp() *timestamppb.Timestamp {
 func (x *StdOutputEventRequest) GetTestCaseRunId() string {
 	if x != nil {
 		return x.TestCaseRunId
+	}
+	return ""
+}
+
+func (x *StdOutputEventRequest) GetRunId() string {
+	if x != nil {
+		return x.RunId
 	}
 	return ""
 }
@@ -628,6 +660,58 @@ func (x *HeartbeatEventRequest) GetTimestamp() *timestamppb.Timestamp {
 	return nil
 }
 
+type MapTestRunEventRequest struct {
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	RunId         string                   `protobuf:"bytes,1,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
+	TestSuites    []*entities.TestSuiteRun `protobuf:"bytes,2,rep,name=test_suites,json=testSuites,proto3" json:"test_suites,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MapTestRunEventRequest) Reset() {
+	*x = MapTestRunEventRequest{}
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MapTestRunEventRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MapTestRunEventRequest) ProtoMessage() {}
+
+func (x *MapTestRunEventRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_testsystem_v1_events_events_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MapTestRunEventRequest.ProtoReflect.Descriptor instead.
+func (*MapTestRunEventRequest) Descriptor() ([]byte, []int) {
+	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *MapTestRunEventRequest) GetRunId() string {
+	if x != nil {
+		return x.RunId
+	}
+	return ""
+}
+
+func (x *MapTestRunEventRequest) GetTestSuites() []*entities.TestSuiteRun {
+	if x != nil {
+		return x.TestSuites
+	}
+	return nil
+}
+
 var File_testsystem_v1_events_events_proto protoreflect.FileDescriptor
 
 const file_testsystem_v1_events_events_proto_rawDesc = "" +
@@ -640,38 +724,46 @@ const file_testsystem_v1_events_events_proto_rawDesc = "" +
 	"\x15StepBeginEventRequest\x123\n" +
 	"\x04step\x18\x01 \x01(\v2\x1f.testsystem.v1.entities.StepRunR\x04step\"J\n" +
 	"\x13StepEndEventRequest\x123\n" +
-	"\x04step\x18\x01 \x01(\v2\x1f.testsystem.v1.entities.StepRunR\x04step\"\xfa\x01\n" +
+	"\x04step\x18\x01 \x01(\v2\x1f.testsystem.v1.entities.StepRunR\x04step\"\x91\x02\n" +
 	"\x17TestFailureEventRequest\x12\x17\n" +
 	"\atest_id\x18\x01 \x01(\tR\x06testId\x12'\n" +
 	"\x0ffailure_message\x18\x02 \x01(\tR\x0efailureMessage\x12\x1f\n" +
 	"\vstack_trace\x18\x03 \x01(\tR\n" +
 	"stackTrace\x128\n" +
 	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12B\n" +
-	"\vattachments\x18\x05 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\"\xf4\x01\n" +
+	"\vattachments\x18\x05 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\x12\x15\n" +
+	"\x06run_id\x18\x06 \x01(\tR\x05runId\"\x8b\x02\n" +
 	"\x15TestErrorEventRequest\x12\x17\n" +
 	"\atest_id\x18\x01 \x01(\tR\x06testId\x12#\n" +
 	"\rerror_message\x18\x02 \x01(\tR\ferrorMessage\x12\x1f\n" +
 	"\vstack_trace\x18\x03 \x01(\tR\n" +
 	"stackTrace\x128\n" +
 	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12B\n" +
-	"\vattachments\x18\x05 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\"\xac\x01\n" +
+	"\vattachments\x18\x05 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\x12\x15\n" +
+	"\x06run_id\x18\x06 \x01(\tR\x05runId\"\xc3\x01\n" +
 	"\x14StdErrorEventRequest\x12\x17\n" +
 	"\atest_id\x18\x01 \x01(\tR\x06testId\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x128\n" +
 	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12'\n" +
-	"\x10test_case_run_id\x18\x04 \x01(\tR\rtestCaseRunId\"\xad\x01\n" +
+	"\x10test_case_run_id\x18\x04 \x01(\tR\rtestCaseRunId\x12\x15\n" +
+	"\x06run_id\x18\x05 \x01(\tR\x05runId\"\xc4\x01\n" +
 	"\x15StdOutputEventRequest\x12\x17\n" +
 	"\atest_id\x18\x01 \x01(\tR\x06testId\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x128\n" +
 	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12'\n" +
-	"\x10test_case_run_id\x18\x04 \x01(\tR\rtestCaseRunId\"T\n" +
+	"\x10test_case_run_id\x18\x04 \x01(\tR\rtestCaseRunId\x12\x15\n" +
+	"\x06run_id\x18\x05 \x01(\tR\x05runId\"T\n" +
 	"\x16SuiteBeginEventRequest\x12:\n" +
 	"\x05suite\x18\x01 \x01(\v2$.testsystem.v1.entities.TestSuiteRunR\x05suite\"R\n" +
 	"\x14SuiteEndEventRequest\x12:\n" +
 	"\x05suite\x18\x01 \x01(\v2$.testsystem.v1.entities.TestSuiteRunR\x05suite\"n\n" +
 	"\x15HeartbeatEventRequest\x12\x1b\n" +
 	"\tsource_id\x18\x01 \x01(\tR\bsourceId\x128\n" +
-	"\ttimestamp\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestampB`\n" +
+	"\ttimestamp\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"v\n" +
+	"\x16MapTestRunEventRequest\x12\x15\n" +
+	"\x06run_id\x18\x01 \x01(\tR\x05runId\x12E\n" +
+	"\vtest_suites\x18\x02 \x03(\v2$.testsystem.v1.entities.TestSuiteRunR\n" +
+	"testSuitesB`\n" +
 	"%com.stanterprise.testsystem.v1.eventsP\x01Z5github.com/stanterprise/proto-go/testsystem/v1/eventsb\x06proto3"
 
 var (
@@ -686,7 +778,7 @@ func file_testsystem_v1_events_events_proto_rawDescGZIP() []byte {
 	return file_testsystem_v1_events_events_proto_rawDescData
 }
 
-var file_testsystem_v1_events_events_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_testsystem_v1_events_events_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_testsystem_v1_events_events_proto_goTypes = []any{
 	(*TestBeginEventRequest)(nil),   // 0: testsystem.v1.events.TestBeginEventRequest
 	(*TestEndEventRequest)(nil),     // 1: testsystem.v1.events.TestEndEventRequest
@@ -699,31 +791,33 @@ var file_testsystem_v1_events_events_proto_goTypes = []any{
 	(*SuiteBeginEventRequest)(nil),  // 8: testsystem.v1.events.SuiteBeginEventRequest
 	(*SuiteEndEventRequest)(nil),    // 9: testsystem.v1.events.SuiteEndEventRequest
 	(*HeartbeatEventRequest)(nil),   // 10: testsystem.v1.events.HeartbeatEventRequest
-	(*entities.TestCaseRun)(nil),    // 11: testsystem.v1.entities.TestCaseRun
-	(*entities.StepRun)(nil),        // 12: testsystem.v1.entities.StepRun
-	(*timestamppb.Timestamp)(nil),   // 13: google.protobuf.Timestamp
-	(*common.Attachment)(nil),       // 14: testsystem.v1.common.Attachment
-	(*entities.TestSuiteRun)(nil),   // 15: testsystem.v1.entities.TestSuiteRun
+	(*MapTestRunEventRequest)(nil),  // 11: testsystem.v1.events.MapTestRunEventRequest
+	(*entities.TestCaseRun)(nil),    // 12: testsystem.v1.entities.TestCaseRun
+	(*entities.StepRun)(nil),        // 13: testsystem.v1.entities.StepRun
+	(*timestamppb.Timestamp)(nil),   // 14: google.protobuf.Timestamp
+	(*common.Attachment)(nil),       // 15: testsystem.v1.common.Attachment
+	(*entities.TestSuiteRun)(nil),   // 16: testsystem.v1.entities.TestSuiteRun
 }
 var file_testsystem_v1_events_events_proto_depIdxs = []int32{
-	11, // 0: testsystem.v1.events.TestBeginEventRequest.test_case:type_name -> testsystem.v1.entities.TestCaseRun
-	11, // 1: testsystem.v1.events.TestEndEventRequest.test_case:type_name -> testsystem.v1.entities.TestCaseRun
-	12, // 2: testsystem.v1.events.StepBeginEventRequest.step:type_name -> testsystem.v1.entities.StepRun
-	12, // 3: testsystem.v1.events.StepEndEventRequest.step:type_name -> testsystem.v1.entities.StepRun
-	13, // 4: testsystem.v1.events.TestFailureEventRequest.timestamp:type_name -> google.protobuf.Timestamp
-	14, // 5: testsystem.v1.events.TestFailureEventRequest.attachments:type_name -> testsystem.v1.common.Attachment
-	13, // 6: testsystem.v1.events.TestErrorEventRequest.timestamp:type_name -> google.protobuf.Timestamp
-	14, // 7: testsystem.v1.events.TestErrorEventRequest.attachments:type_name -> testsystem.v1.common.Attachment
-	13, // 8: testsystem.v1.events.StdErrorEventRequest.timestamp:type_name -> google.protobuf.Timestamp
-	13, // 9: testsystem.v1.events.StdOutputEventRequest.timestamp:type_name -> google.protobuf.Timestamp
-	15, // 10: testsystem.v1.events.SuiteBeginEventRequest.suite:type_name -> testsystem.v1.entities.TestSuiteRun
-	15, // 11: testsystem.v1.events.SuiteEndEventRequest.suite:type_name -> testsystem.v1.entities.TestSuiteRun
-	13, // 12: testsystem.v1.events.HeartbeatEventRequest.timestamp:type_name -> google.protobuf.Timestamp
-	13, // [13:13] is the sub-list for method output_type
-	13, // [13:13] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	12, // 0: testsystem.v1.events.TestBeginEventRequest.test_case:type_name -> testsystem.v1.entities.TestCaseRun
+	12, // 1: testsystem.v1.events.TestEndEventRequest.test_case:type_name -> testsystem.v1.entities.TestCaseRun
+	13, // 2: testsystem.v1.events.StepBeginEventRequest.step:type_name -> testsystem.v1.entities.StepRun
+	13, // 3: testsystem.v1.events.StepEndEventRequest.step:type_name -> testsystem.v1.entities.StepRun
+	14, // 4: testsystem.v1.events.TestFailureEventRequest.timestamp:type_name -> google.protobuf.Timestamp
+	15, // 5: testsystem.v1.events.TestFailureEventRequest.attachments:type_name -> testsystem.v1.common.Attachment
+	14, // 6: testsystem.v1.events.TestErrorEventRequest.timestamp:type_name -> google.protobuf.Timestamp
+	15, // 7: testsystem.v1.events.TestErrorEventRequest.attachments:type_name -> testsystem.v1.common.Attachment
+	14, // 8: testsystem.v1.events.StdErrorEventRequest.timestamp:type_name -> google.protobuf.Timestamp
+	14, // 9: testsystem.v1.events.StdOutputEventRequest.timestamp:type_name -> google.protobuf.Timestamp
+	16, // 10: testsystem.v1.events.SuiteBeginEventRequest.suite:type_name -> testsystem.v1.entities.TestSuiteRun
+	16, // 11: testsystem.v1.events.SuiteEndEventRequest.suite:type_name -> testsystem.v1.entities.TestSuiteRun
+	14, // 12: testsystem.v1.events.HeartbeatEventRequest.timestamp:type_name -> google.protobuf.Timestamp
+	16, // 13: testsystem.v1.events.MapTestRunEventRequest.test_suites:type_name -> testsystem.v1.entities.TestSuiteRun
+	14, // [14:14] is the sub-list for method output_type
+	14, // [14:14] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_testsystem_v1_events_events_proto_init() }
@@ -737,7 +831,7 @@ func file_testsystem_v1_events_events_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_testsystem_v1_events_events_proto_rawDesc), len(file_testsystem_v1_events_events_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
