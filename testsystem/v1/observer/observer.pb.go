@@ -92,7 +92,8 @@ const file_testsystem_v1_observer_observer_proto_rawDesc = "" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x12\"\n" +
 	"\n" +
 	"error_code\x18\x03 \x01(\x05H\x00R\terrorCode\x88\x01\x01B\r\n" +
-	"\v_error_code2\xc0\t\n" +
+	"\v_error_code2\xa3\n" +
+	"\n" +
 	"\x12TestEventCollector\x12_\n" +
 	"\n" +
 	"MapTestRun\x12,.testsystem.v1.events.MapTestRunEventRequest\x1a#.testsystem.v1.observer.AckResponse\x12e\n" +
@@ -105,7 +106,8 @@ const file_testsystem_v1_observer_observer_proto_rawDesc = "" +
 	"\x11ReportTestFailure\x12-.testsystem.v1.events.TestFailureEventRequest\x1a#.testsystem.v1.observer.AckResponse\x12c\n" +
 	"\x0fReportTestError\x12+.testsystem.v1.events.TestErrorEventRequest\x1a#.testsystem.v1.observer.AckResponse\x12a\n" +
 	"\x0eReportStdError\x12*.testsystem.v1.events.StdErrorEventRequest\x1a#.testsystem.v1.observer.AckResponse\x12c\n" +
-	"\x0fReportStdOutput\x12+.testsystem.v1.events.StdOutputEventRequest\x1a#.testsystem.v1.observer.AckResponse\x12]\n" +
+	"\x0fReportStdOutput\x12+.testsystem.v1.events.StdOutputEventRequest\x1a#.testsystem.v1.observer.AckResponse\x12a\n" +
+	"\fReportRunEnd\x12,.testsystem.v1.events.TestRunEndEventRequest\x1a#.testsystem.v1.observer.AckResponse\x12]\n" +
 	"\tHeartbeat\x12+.testsystem.v1.events.HeartbeatEventRequest\x1a#.testsystem.v1.observer.AckResponseBd\n" +
 	"'com.stanterprise.testsystem.v1.observerP\x01Z7github.com/stanterprise/proto-go/testsystem/v1/observerb\x06proto3"
 
@@ -135,7 +137,8 @@ var file_testsystem_v1_observer_observer_proto_goTypes = []any{
 	(*events.TestErrorEventRequest)(nil),   // 9: testsystem.v1.events.TestErrorEventRequest
 	(*events.StdErrorEventRequest)(nil),    // 10: testsystem.v1.events.StdErrorEventRequest
 	(*events.StdOutputEventRequest)(nil),   // 11: testsystem.v1.events.StdOutputEventRequest
-	(*events.HeartbeatEventRequest)(nil),   // 12: testsystem.v1.events.HeartbeatEventRequest
+	(*events.TestRunEndEventRequest)(nil),  // 12: testsystem.v1.events.TestRunEndEventRequest
+	(*events.HeartbeatEventRequest)(nil),   // 13: testsystem.v1.events.HeartbeatEventRequest
 }
 var file_testsystem_v1_observer_observer_proto_depIdxs = []int32{
 	1,  // 0: testsystem.v1.observer.TestEventCollector.MapTestRun:input_type -> testsystem.v1.events.MapTestRunEventRequest
@@ -149,21 +152,23 @@ var file_testsystem_v1_observer_observer_proto_depIdxs = []int32{
 	9,  // 8: testsystem.v1.observer.TestEventCollector.ReportTestError:input_type -> testsystem.v1.events.TestErrorEventRequest
 	10, // 9: testsystem.v1.observer.TestEventCollector.ReportStdError:input_type -> testsystem.v1.events.StdErrorEventRequest
 	11, // 10: testsystem.v1.observer.TestEventCollector.ReportStdOutput:input_type -> testsystem.v1.events.StdOutputEventRequest
-	12, // 11: testsystem.v1.observer.TestEventCollector.Heartbeat:input_type -> testsystem.v1.events.HeartbeatEventRequest
-	0,  // 12: testsystem.v1.observer.TestEventCollector.MapTestRun:output_type -> testsystem.v1.observer.AckResponse
-	0,  // 13: testsystem.v1.observer.TestEventCollector.ReportSuiteBegin:output_type -> testsystem.v1.observer.AckResponse
-	0,  // 14: testsystem.v1.observer.TestEventCollector.ReportSuiteEnd:output_type -> testsystem.v1.observer.AckResponse
-	0,  // 15: testsystem.v1.observer.TestEventCollector.ReportTestBegin:output_type -> testsystem.v1.observer.AckResponse
-	0,  // 16: testsystem.v1.observer.TestEventCollector.ReportTestEnd:output_type -> testsystem.v1.observer.AckResponse
-	0,  // 17: testsystem.v1.observer.TestEventCollector.ReportStepBegin:output_type -> testsystem.v1.observer.AckResponse
-	0,  // 18: testsystem.v1.observer.TestEventCollector.ReportStepEnd:output_type -> testsystem.v1.observer.AckResponse
-	0,  // 19: testsystem.v1.observer.TestEventCollector.ReportTestFailure:output_type -> testsystem.v1.observer.AckResponse
-	0,  // 20: testsystem.v1.observer.TestEventCollector.ReportTestError:output_type -> testsystem.v1.observer.AckResponse
-	0,  // 21: testsystem.v1.observer.TestEventCollector.ReportStdError:output_type -> testsystem.v1.observer.AckResponse
-	0,  // 22: testsystem.v1.observer.TestEventCollector.ReportStdOutput:output_type -> testsystem.v1.observer.AckResponse
-	0,  // 23: testsystem.v1.observer.TestEventCollector.Heartbeat:output_type -> testsystem.v1.observer.AckResponse
-	12, // [12:24] is the sub-list for method output_type
-	0,  // [0:12] is the sub-list for method input_type
+	12, // 11: testsystem.v1.observer.TestEventCollector.ReportRunEnd:input_type -> testsystem.v1.events.TestRunEndEventRequest
+	13, // 12: testsystem.v1.observer.TestEventCollector.Heartbeat:input_type -> testsystem.v1.events.HeartbeatEventRequest
+	0,  // 13: testsystem.v1.observer.TestEventCollector.MapTestRun:output_type -> testsystem.v1.observer.AckResponse
+	0,  // 14: testsystem.v1.observer.TestEventCollector.ReportSuiteBegin:output_type -> testsystem.v1.observer.AckResponse
+	0,  // 15: testsystem.v1.observer.TestEventCollector.ReportSuiteEnd:output_type -> testsystem.v1.observer.AckResponse
+	0,  // 16: testsystem.v1.observer.TestEventCollector.ReportTestBegin:output_type -> testsystem.v1.observer.AckResponse
+	0,  // 17: testsystem.v1.observer.TestEventCollector.ReportTestEnd:output_type -> testsystem.v1.observer.AckResponse
+	0,  // 18: testsystem.v1.observer.TestEventCollector.ReportStepBegin:output_type -> testsystem.v1.observer.AckResponse
+	0,  // 19: testsystem.v1.observer.TestEventCollector.ReportStepEnd:output_type -> testsystem.v1.observer.AckResponse
+	0,  // 20: testsystem.v1.observer.TestEventCollector.ReportTestFailure:output_type -> testsystem.v1.observer.AckResponse
+	0,  // 21: testsystem.v1.observer.TestEventCollector.ReportTestError:output_type -> testsystem.v1.observer.AckResponse
+	0,  // 22: testsystem.v1.observer.TestEventCollector.ReportStdError:output_type -> testsystem.v1.observer.AckResponse
+	0,  // 23: testsystem.v1.observer.TestEventCollector.ReportStdOutput:output_type -> testsystem.v1.observer.AckResponse
+	0,  // 24: testsystem.v1.observer.TestEventCollector.ReportRunEnd:output_type -> testsystem.v1.observer.AckResponse
+	0,  // 25: testsystem.v1.observer.TestEventCollector.Heartbeat:output_type -> testsystem.v1.observer.AckResponse
+	13, // [13:26] is the sub-list for method output_type
+	0,  // [0:13] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name

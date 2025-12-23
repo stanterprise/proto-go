@@ -31,6 +31,7 @@ const (
 	TestEventCollector_ReportTestError_FullMethodName   = "/testsystem.v1.observer.TestEventCollector/ReportTestError"
 	TestEventCollector_ReportStdError_FullMethodName    = "/testsystem.v1.observer.TestEventCollector/ReportStdError"
 	TestEventCollector_ReportStdOutput_FullMethodName   = "/testsystem.v1.observer.TestEventCollector/ReportStdOutput"
+	TestEventCollector_ReportRunEnd_FullMethodName      = "/testsystem.v1.observer.TestEventCollector/ReportRunEnd"
 	TestEventCollector_Heartbeat_FullMethodName         = "/testsystem.v1.observer.TestEventCollector/Heartbeat"
 )
 
@@ -62,6 +63,8 @@ type TestEventCollectorClient interface {
 	ReportStdError(ctx context.Context, in *events.StdErrorEventRequest, opts ...grpc.CallOption) (*AckResponse, error)
 	// ReportStdOutput captures standard output logs from test execution
 	ReportStdOutput(ctx context.Context, in *events.StdOutputEventRequest, opts ...grpc.CallOption) (*AckResponse, error)
+	// ReportRunEnd captures the end of the entire test run
+	ReportRunEnd(ctx context.Context, in *events.TestRunEndEventRequest, opts ...grpc.CallOption) (*AckResponse, error)
 	// Heartbeat is used to signal that the test runner is still active
 	Heartbeat(ctx context.Context, in *events.HeartbeatEventRequest, opts ...grpc.CallOption) (*AckResponse, error)
 }
@@ -184,6 +187,16 @@ func (c *testEventCollectorClient) ReportStdOutput(ctx context.Context, in *even
 	return out, nil
 }
 
+func (c *testEventCollectorClient) ReportRunEnd(ctx context.Context, in *events.TestRunEndEventRequest, opts ...grpc.CallOption) (*AckResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AckResponse)
+	err := c.cc.Invoke(ctx, TestEventCollector_ReportRunEnd_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *testEventCollectorClient) Heartbeat(ctx context.Context, in *events.HeartbeatEventRequest, opts ...grpc.CallOption) (*AckResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AckResponse)
@@ -222,6 +235,8 @@ type TestEventCollectorServer interface {
 	ReportStdError(context.Context, *events.StdErrorEventRequest) (*AckResponse, error)
 	// ReportStdOutput captures standard output logs from test execution
 	ReportStdOutput(context.Context, *events.StdOutputEventRequest) (*AckResponse, error)
+	// ReportRunEnd captures the end of the entire test run
+	ReportRunEnd(context.Context, *events.TestRunEndEventRequest) (*AckResponse, error)
 	// Heartbeat is used to signal that the test runner is still active
 	Heartbeat(context.Context, *events.HeartbeatEventRequest) (*AckResponse, error)
 	mustEmbedUnimplementedTestEventCollectorServer()
@@ -266,6 +281,9 @@ func (UnimplementedTestEventCollectorServer) ReportStdError(context.Context, *ev
 }
 func (UnimplementedTestEventCollectorServer) ReportStdOutput(context.Context, *events.StdOutputEventRequest) (*AckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReportStdOutput not implemented")
+}
+func (UnimplementedTestEventCollectorServer) ReportRunEnd(context.Context, *events.TestRunEndEventRequest) (*AckResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReportRunEnd not implemented")
 }
 func (UnimplementedTestEventCollectorServer) Heartbeat(context.Context, *events.HeartbeatEventRequest) (*AckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Heartbeat not implemented")
@@ -489,6 +507,24 @@ func _TestEventCollector_ReportStdOutput_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TestEventCollector_ReportRunEnd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(events.TestRunEndEventRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TestEventCollectorServer).ReportRunEnd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TestEventCollector_ReportRunEnd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TestEventCollectorServer).ReportRunEnd(ctx, req.(*events.TestRunEndEventRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _TestEventCollector_Heartbeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(events.HeartbeatEventRequest)
 	if err := dec(in); err != nil {
@@ -557,6 +593,10 @@ var TestEventCollector_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReportStdOutput",
 			Handler:    _TestEventCollector_ReportStdOutput_Handler,
+		},
+		{
+			MethodName: "ReportRunEnd",
+			Handler:    _TestEventCollector_ReportRunEnd_Handler,
 		},
 		{
 			MethodName: "Heartbeat",
