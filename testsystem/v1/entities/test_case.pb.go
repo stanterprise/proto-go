@@ -25,28 +25,28 @@ const (
 )
 
 type TestCaseRun struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                                                        // Unique identifier for the test result
-	Name           string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                                                    // Name/title of the test case
-	Description    string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`                                                                      // Description of the test case
-	RunId          string                 `protobuf:"bytes,4,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`                                                                     // Identifier for the global test run this test belongs to
-	TestSuiteRunId string                 `protobuf:"bytes,5,opt,name=test_suite_run_id,json=testSuiteRunId,proto3" json:"test_suite_run_id,omitempty"`                                      // Reference to the test suite run this test belongs to
-	Status         common.TestStatus      `protobuf:"varint,6,opt,name=status,proto3,enum=testsystem.v1.common.TestStatus" json:"status,omitempty"`                                          // Result status (e.g., "passed", "failed", "skipped")
-	StartTime      *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`                                                         // Start time of the test execution
-	EndTime        *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`                                                               // End time of the test execution
-	Duration       *durationpb.Duration   `protobuf:"bytes,9,opt,name=duration,proto3" json:"duration,omitempty"`                                                                            // Duration of the test execution
-	Attachments    []*common.Attachment   `protobuf:"bytes,10,rep,name=attachments,proto3" json:"attachments,omitempty"`                                                                     // Attachments related to the test result
-	ErrorMessage   string                 `protobuf:"bytes,11,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`                                               // Error message if the test failed
-	StackTrace     string                 `protobuf:"bytes,12,opt,name=stack_trace,json=stackTrace,proto3" json:"stack_trace,omitempty"`                                                     // Stack trace if applicable
-	Errors         []string               `protobuf:"bytes,13,rep,name=errors,proto3" json:"errors,omitempty"`                                                                               // List of error messages if any
-	Metadata       map[string]string      `protobuf:"bytes,14,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Additional metadata for the test result
-	Tags           []string               `protobuf:"bytes,15,rep,name=tags,proto3" json:"tags,omitempty"`                                                                                   // Tags associated with the test case
-	Location       string                 `protobuf:"bytes,16,opt,name=location,proto3" json:"location,omitempty"`                                                                           // Location in the code where the test is defined
-	RetryCount     int32                  `protobuf:"varint,17,opt,name=retry_count,json=retryCount,proto3" json:"retry_count,omitempty"`                                                    // Total number of retry attempts allowed for this test
-	RetryIndex     int32                  `protobuf:"varint,18,opt,name=retry_index,json=retryIndex,proto3" json:"retry_index,omitempty"`                                                    // Current retry attempt index (0 for first attempt)
-	Timeout        int32                  `protobuf:"varint,19,opt,name=timeout,proto3" json:"timeout,omitempty"`                                                                            // Timeout in milliseconds for this test
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                                                        // Unique identifier for the test result
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                                                    // Name/title of the test case
+	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`                                                                      // Description of the test case
+	RunId         string                 `protobuf:"bytes,4,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`                                                                     // Identifier for the global test run this test belongs to
+	TestSuiteId   string                 `protobuf:"bytes,5,opt,name=test_suite_id,json=testSuiteId,proto3" json:"test_suite_id,omitempty"`                                                 // Reference to the test suite this test belongs to
+	Status        common.TestStatus      `protobuf:"varint,6,opt,name=status,proto3,enum=testsystem.v1.common.TestStatus" json:"status,omitempty"`                                          // Result status (e.g., "passed", "failed", "skipped")
+	StartTime     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`                                                         // Start time of the test execution
+	EndTime       *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`                                                               // End time of the test execution
+	Duration      *durationpb.Duration   `protobuf:"bytes,9,opt,name=duration,proto3" json:"duration,omitempty"`                                                                            // Duration of the test execution
+	Attachments   []*common.Attachment   `protobuf:"bytes,10,rep,name=attachments,proto3" json:"attachments,omitempty"`                                                                     // Attachments related to the test result
+	ErrorMessage  string                 `protobuf:"bytes,11,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`                                               // Error message if the test failed
+	StackTrace    string                 `protobuf:"bytes,12,opt,name=stack_trace,json=stackTrace,proto3" json:"stack_trace,omitempty"`                                                     // Stack trace if applicable
+	Errors        []string               `protobuf:"bytes,13,rep,name=errors,proto3" json:"errors,omitempty"`                                                                               // List of error messages if any
+	Metadata      map[string]string      `protobuf:"bytes,14,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Additional metadata for the test result
+	Tags          []string               `protobuf:"bytes,15,rep,name=tags,proto3" json:"tags,omitempty"`                                                                                   // Tags associated with the test case
+	Location      string                 `protobuf:"bytes,16,opt,name=location,proto3" json:"location,omitempty"`                                                                           // Location in the code where the test is defined
+	RetryCount    int32                  `protobuf:"varint,17,opt,name=retry_count,json=retryCount,proto3" json:"retry_count,omitempty"`                                                    // Total number of retry attempts allowed for this test
+	RetryIndex    int32                  `protobuf:"varint,18,opt,name=retry_index,json=retryIndex,proto3" json:"retry_index,omitempty"`                                                    // Current retry attempt index (0 for first attempt)
+	Timeout       int32                  `protobuf:"varint,19,opt,name=timeout,proto3" json:"timeout,omitempty"`                                                                            // Timeout in milliseconds for this test
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *TestCaseRun) Reset() {
@@ -107,9 +107,9 @@ func (x *TestCaseRun) GetRunId() string {
 	return ""
 }
 
-func (x *TestCaseRun) GetTestSuiteRunId() string {
+func (x *TestCaseRun) GetTestSuiteId() string {
 	if x != nil {
-		return x.TestSuiteRunId
+		return x.TestSuiteId
 	}
 	return ""
 }
@@ -216,7 +216,7 @@ type StepRun struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                                                       // Unique identifier for the step result
 	RunId         string                 `protobuf:"bytes,2,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`                                                                    // Identifier for the global test run this step belongs to
-	TestCaseRunId string                 `protobuf:"bytes,3,opt,name=test_case_run_id,json=testCaseRunId,proto3" json:"test_case_run_id,omitempty"`                                        // Reference to the test case run this step belongs to
+	TestCaseId    string                 `protobuf:"bytes,3,opt,name=test_case_id,json=testCaseId,proto3" json:"test_case_id,omitempty"`                                                   // Reference to the test case run this step belongs to, this ID is unique within the context of a test run
 	Title         string                 `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`                                                                                 // Title of the step
 	Description   string                 `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`                                                                     // Description of the step
 	StartTime     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`                                                        // Start time of the test execution
@@ -278,9 +278,9 @@ func (x *StepRun) GetRunId() string {
 	return ""
 }
 
-func (x *StepRun) GetTestCaseRunId() string {
+func (x *StepRun) GetTestCaseId() string {
 	if x != nil {
-		return x.TestCaseRunId
+		return x.TestCaseId
 	}
 	return ""
 }
@@ -380,13 +380,13 @@ var File_testsystem_v1_entities_test_case_proto protoreflect.FileDescriptor
 
 const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
 	"\n" +
-	"&testsystem/v1/entities/test_case.proto\x12\x16testsystem.v1.entities\x1a!testsystem/v1/common/common.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\"\xb2\x06\n" +
+	"&testsystem/v1/entities/test_case.proto\x12\x16testsystem.v1.entities\x1a!testsystem/v1/common/common.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\"\xab\x06\n" +
 	"\vTestCaseRun\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x15\n" +
-	"\x06run_id\x18\x04 \x01(\tR\x05runId\x12)\n" +
-	"\x11test_suite_run_id\x18\x05 \x01(\tR\x0etestSuiteRunId\x128\n" +
+	"\x06run_id\x18\x04 \x01(\tR\x05runId\x12\"\n" +
+	"\rtest_suite_id\x18\x05 \x01(\tR\vtestSuiteId\x128\n" +
 	"\x06status\x18\x06 \x01(\x0e2 .testsystem.v1.common.TestStatusR\x06status\x129\n" +
 	"\n" +
 	"start_time\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
@@ -408,11 +408,12 @@ const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
 	"\atimeout\x18\x13 \x01(\x05R\atimeout\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x88\x05\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x81\x05\n" +
 	"\aStepRun\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
-	"\x06run_id\x18\x02 \x01(\tR\x05runId\x12'\n" +
-	"\x10test_case_run_id\x18\x03 \x01(\tR\rtestCaseRunId\x12\x14\n" +
+	"\x06run_id\x18\x02 \x01(\tR\x05runId\x12 \n" +
+	"\ftest_case_id\x18\x03 \x01(\tR\n" +
+	"testCaseId\x12\x14\n" +
 	"\x05title\x18\x04 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x05 \x01(\tR\vdescription\x129\n" +
 	"\n" +

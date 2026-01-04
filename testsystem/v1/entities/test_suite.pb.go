@@ -30,6 +30,7 @@ const (
 	SuiteType_ROOT     SuiteType = 0
 	SuiteType_PROJECT  SuiteType = 1
 	SuiteType_SUBSUITE SuiteType = 2
+	SuiteType_FILE     SuiteType = 3
 )
 
 // Enum value maps for SuiteType.
@@ -38,11 +39,13 @@ var (
 		0: "ROOT",
 		1: "PROJECT",
 		2: "SUBSUITE",
+		3: "FILE",
 	}
 	SuiteType_value = map[string]int32{
 		"ROOT":     0,
 		"PROJECT":  1,
 		"SUBSUITE": 2,
+		"FILE":     3,
 	}
 )
 
@@ -85,7 +88,7 @@ type TestSuiteRun struct {
 	Status        common.TestStatus      `protobuf:"varint,8,opt,name=status,proto3,enum=testsystem.v1.common.TestStatus" json:"status,omitempty"`                                         // Overall status of the suite run
 	Metadata      map[string]string      `protobuf:"bytes,9,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Additional metadata for the suite
 	Location      string                 `protobuf:"bytes,10,opt,name=location,proto3" json:"location,omitempty"`                                                                          // Location or path of the test suite definition
-	Type          SuiteType              `protobuf:"varint,11,opt,name=type,proto3,enum=testsystem.v1.entities.SuiteType" json:"type,omitempty"`                                           // Type of the test suite (e.g., "root", "project", "subsuite")
+	Type          SuiteType              `protobuf:"varint,11,opt,name=type,proto3,enum=testsystem.v1.entities.SuiteType" json:"type,omitempty"`                                           // Type of the test suite (e.g., "root", "project", "subsuite", "file", etc.)
 	ParentSuiteId string                 `protobuf:"bytes,12,opt,name=parent_suite_id,json=parentSuiteId,proto3" json:"parent_suite_id,omitempty"`                                         // Reference to the parent suite, if any
 	TestCaseIds   []string               `protobuf:"bytes,13,rep,name=test_case_ids,json=testCaseIds,proto3" json:"test_case_ids,omitempty"`                                               // List of test case IDs in this suite
 	SubSuiteIds   []string               `protobuf:"bytes,14,rep,name=sub_suite_ids,json=subSuiteIds,proto3" json:"sub_suite_ids,omitempty"`                                               // Nested test suite IDs
@@ -301,11 +304,12 @@ const file_testsystem_v1_entities_test_suite_proto_rawDesc = "" +
 	"sub_suites\x18\x14 \x03(\v2$.testsystem.v1.entities.TestSuiteRunR\tsubSuites\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*0\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*:\n" +
 	"\tSuiteType\x12\b\n" +
 	"\x04ROOT\x10\x00\x12\v\n" +
 	"\aPROJECT\x10\x01\x12\f\n" +
-	"\bSUBSUITE\x10\x02Bd\n" +
+	"\bSUBSUITE\x10\x02\x12\b\n" +
+	"\x04FILE\x10\x03Bd\n" +
 	"'com.stanterprise.testsystem.v1.entitiesP\x01Z7github.com/stanterprise/proto-go/testsystem/v1/entitiesb\x06proto3"
 
 var (

@@ -20,7 +20,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TestEventCollector_MapTestRun_FullMethodName        = "/testsystem.v1.observer.TestEventCollector/MapTestRun"
+	TestEventCollector_ReportRunStart_FullMethodName    = "/testsystem.v1.observer.TestEventCollector/ReportRunStart"
 	TestEventCollector_ReportSuiteBegin_FullMethodName  = "/testsystem.v1.observer.TestEventCollector/ReportSuiteBegin"
 	TestEventCollector_ReportSuiteEnd_FullMethodName    = "/testsystem.v1.observer.TestEventCollector/ReportSuiteEnd"
 	TestEventCollector_ReportTestBegin_FullMethodName   = "/testsystem.v1.observer.TestEventCollector/ReportTestBegin"
@@ -41,8 +41,8 @@ const (
 //
 // TestEventCollector defines the gRPC service for collecting test execution events
 type TestEventCollectorClient interface {
-	// MapTestRun maps an incoming test run to the internal representation
-	MapTestRun(ctx context.Context, in *events.MapTestRunEventRequest, opts ...grpc.CallOption) (*AckResponse, error)
+	// ReportRunStart captures the start of the entire test run and maps the incoming test run to the internal representation
+	ReportRunStart(ctx context.Context, in *events.ReportRunStartEventRequest, opts ...grpc.CallOption) (*AckResponse, error)
 	// ReportSuiteBegin captures the beginning of a test suite execution
 	ReportSuiteBegin(ctx context.Context, in *events.SuiteBeginEventRequest, opts ...grpc.CallOption) (*AckResponse, error)
 	// ReportSuiteEnd captures the end of a test suite execution
@@ -77,10 +77,10 @@ func NewTestEventCollectorClient(cc grpc.ClientConnInterface) TestEventCollector
 	return &testEventCollectorClient{cc}
 }
 
-func (c *testEventCollectorClient) MapTestRun(ctx context.Context, in *events.MapTestRunEventRequest, opts ...grpc.CallOption) (*AckResponse, error) {
+func (c *testEventCollectorClient) ReportRunStart(ctx context.Context, in *events.ReportRunStartEventRequest, opts ...grpc.CallOption) (*AckResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AckResponse)
-	err := c.cc.Invoke(ctx, TestEventCollector_MapTestRun_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TestEventCollector_ReportRunStart_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -213,8 +213,8 @@ func (c *testEventCollectorClient) Heartbeat(ctx context.Context, in *events.Hea
 //
 // TestEventCollector defines the gRPC service for collecting test execution events
 type TestEventCollectorServer interface {
-	// MapTestRun maps an incoming test run to the internal representation
-	MapTestRun(context.Context, *events.MapTestRunEventRequest) (*AckResponse, error)
+	// ReportRunStart captures the start of the entire test run and maps the incoming test run to the internal representation
+	ReportRunStart(context.Context, *events.ReportRunStartEventRequest) (*AckResponse, error)
 	// ReportSuiteBegin captures the beginning of a test suite execution
 	ReportSuiteBegin(context.Context, *events.SuiteBeginEventRequest) (*AckResponse, error)
 	// ReportSuiteEnd captures the end of a test suite execution
@@ -249,8 +249,8 @@ type TestEventCollectorServer interface {
 // pointer dereference when methods are called.
 type UnimplementedTestEventCollectorServer struct{}
 
-func (UnimplementedTestEventCollectorServer) MapTestRun(context.Context, *events.MapTestRunEventRequest) (*AckResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method MapTestRun not implemented")
+func (UnimplementedTestEventCollectorServer) ReportRunStart(context.Context, *events.ReportRunStartEventRequest) (*AckResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReportRunStart not implemented")
 }
 func (UnimplementedTestEventCollectorServer) ReportSuiteBegin(context.Context, *events.SuiteBeginEventRequest) (*AckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReportSuiteBegin not implemented")
@@ -309,20 +309,20 @@ func RegisterTestEventCollectorServer(s grpc.ServiceRegistrar, srv TestEventColl
 	s.RegisterService(&TestEventCollector_ServiceDesc, srv)
 }
 
-func _TestEventCollector_MapTestRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(events.MapTestRunEventRequest)
+func _TestEventCollector_ReportRunStart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(events.ReportRunStartEventRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TestEventCollectorServer).MapTestRun(ctx, in)
+		return srv.(TestEventCollectorServer).ReportRunStart(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TestEventCollector_MapTestRun_FullMethodName,
+		FullMethod: TestEventCollector_ReportRunStart_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TestEventCollectorServer).MapTestRun(ctx, req.(*events.MapTestRunEventRequest))
+		return srv.(TestEventCollectorServer).ReportRunStart(ctx, req.(*events.ReportRunStartEventRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -551,8 +551,8 @@ var TestEventCollector_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*TestEventCollectorServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "MapTestRun",
-			Handler:    _TestEventCollector_MapTestRun_Handler,
+			MethodName: "ReportRunStart",
+			Handler:    _TestEventCollector_ReportRunStart_Handler,
 		},
 		{
 			MethodName: "ReportSuiteBegin",
