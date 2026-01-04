@@ -230,6 +230,7 @@ type StepRun struct {
 	Errors        []string               `protobuf:"bytes,14,rep,name=errors,proto3" json:"errors,omitempty"`                                                                              // List of all error messages observed during step execution, if any
 	Location      string                 `protobuf:"bytes,15,opt,name=location,proto3" json:"location,omitempty"`                                                                          // Location in the code where the step is defined
 	Category      string                 `protobuf:"bytes,16,opt,name=category,proto3" json:"category,omitempty"`                                                                          // Category of step (e.g., "hook", "fixture", "test.step")
+	RetryIndex    int32                  `protobuf:"varint,17,opt,name=retry_index,json=retryIndex,proto3" json:"retry_index,omitempty"`                                                   // Current retry attempt index of the parent test case
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -376,6 +377,13 @@ func (x *StepRun) GetCategory() string {
 	return ""
 }
 
+func (x *StepRun) GetRetryIndex() int32 {
+	if x != nil {
+		return x.RetryIndex
+	}
+	return 0
+}
+
 var File_testsystem_v1_entities_test_case_proto protoreflect.FileDescriptor
 
 const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
@@ -408,7 +416,7 @@ const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
 	"\atimeout\x18\x13 \x01(\x05R\atimeout\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x81\x05\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xa2\x05\n" +
 	"\aStepRun\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
 	"\x06run_id\x18\x02 \x01(\tR\x05runId\x12 \n" +
@@ -428,7 +436,9 @@ const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
 	"\x05error\x18\r \x01(\tR\x05error\x12\x16\n" +
 	"\x06errors\x18\x0e \x03(\tR\x06errors\x12\x1a\n" +
 	"\blocation\x18\x0f \x01(\tR\blocation\x12\x1a\n" +
-	"\bcategory\x18\x10 \x01(\tR\bcategory\x1a;\n" +
+	"\bcategory\x18\x10 \x01(\tR\bcategory\x12\x1f\n" +
+	"\vretry_index\x18\x11 \x01(\x05R\n" +
+	"retryIndex\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01Bd\n" +
