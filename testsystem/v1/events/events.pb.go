@@ -661,7 +661,7 @@ func (x *HeartbeatEventRequest) GetTimestamp() *timestamppb.Timestamp {
 	return nil
 }
 
-type MapTestRunEventRequest struct {
+type ReportRunStartEventRequest struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
 	RunId         string                   `protobuf:"bytes,1,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
 	TestSuites    []*entities.TestSuiteRun `protobuf:"bytes,2,rep,name=test_suites,json=testSuites,proto3" json:"test_suites,omitempty"`
@@ -672,20 +672,20 @@ type MapTestRunEventRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *MapTestRunEventRequest) Reset() {
-	*x = MapTestRunEventRequest{}
+func (x *ReportRunStartEventRequest) Reset() {
+	*x = ReportRunStartEventRequest{}
 	mi := &file_testsystem_v1_events_events_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *MapTestRunEventRequest) String() string {
+func (x *ReportRunStartEventRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MapTestRunEventRequest) ProtoMessage() {}
+func (*ReportRunStartEventRequest) ProtoMessage() {}
 
-func (x *MapTestRunEventRequest) ProtoReflect() protoreflect.Message {
+func (x *ReportRunStartEventRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_testsystem_v1_events_events_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -697,40 +697,40 @@ func (x *MapTestRunEventRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use MapTestRunEventRequest.ProtoReflect.Descriptor instead.
-func (*MapTestRunEventRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ReportRunStartEventRequest.ProtoReflect.Descriptor instead.
+func (*ReportRunStartEventRequest) Descriptor() ([]byte, []int) {
 	return file_testsystem_v1_events_events_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *MapTestRunEventRequest) GetRunId() string {
+func (x *ReportRunStartEventRequest) GetRunId() string {
 	if x != nil {
 		return x.RunId
 	}
 	return ""
 }
 
-func (x *MapTestRunEventRequest) GetTestSuites() []*entities.TestSuiteRun {
+func (x *ReportRunStartEventRequest) GetTestSuites() []*entities.TestSuiteRun {
 	if x != nil {
 		return x.TestSuites
 	}
 	return nil
 }
 
-func (x *MapTestRunEventRequest) GetTotalTests() int32 {
+func (x *ReportRunStartEventRequest) GetTotalTests() int32 {
 	if x != nil {
 		return x.TotalTests
 	}
 	return 0
 }
 
-func (x *MapTestRunEventRequest) GetName() string {
+func (x *ReportRunStartEventRequest) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *MapTestRunEventRequest) GetMetadata() map[string]string {
+func (x *ReportRunStartEventRequest) GetMetadata() map[string]string {
 	if x != nil {
 		return x.Metadata
 	}
@@ -852,15 +852,15 @@ const file_testsystem_v1_events_events_proto_rawDesc = "" +
 	"\x05suite\x18\x01 \x01(\v2$.testsystem.v1.entities.TestSuiteRunR\x05suite\"n\n" +
 	"\x15HeartbeatEventRequest\x12\x1b\n" +
 	"\tsource_id\x18\x01 \x01(\tR\bsourceId\x128\n" +
-	"\ttimestamp\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"\xc0\x02\n" +
-	"\x16MapTestRunEventRequest\x12\x15\n" +
+	"\ttimestamp\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"\xc8\x02\n" +
+	"\x1aReportRunStartEventRequest\x12\x15\n" +
 	"\x06run_id\x18\x01 \x01(\tR\x05runId\x12E\n" +
 	"\vtest_suites\x18\x02 \x03(\v2$.testsystem.v1.entities.TestSuiteRunR\n" +
 	"testSuites\x12\x1f\n" +
 	"\vtotal_tests\x18\x03 \x01(\x05R\n" +
 	"totalTests\x12\x12\n" +
-	"\x04name\x18\x04 \x01(\tR\x04name\x12V\n" +
-	"\bmetadata\x18\x05 \x03(\v2:.testsystem.v1.events.MapTestRunEventRequest.MetadataEntryR\bmetadata\x1a;\n" +
+	"\x04name\x18\x04 \x01(\tR\x04name\x12Z\n" +
+	"\bmetadata\x18\x05 \x03(\v2>.testsystem.v1.events.ReportRunStartEventRequest.MetadataEntryR\bmetadata\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xe6\x01\n" +
@@ -886,27 +886,27 @@ func file_testsystem_v1_events_events_proto_rawDescGZIP() []byte {
 
 var file_testsystem_v1_events_events_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_testsystem_v1_events_events_proto_goTypes = []any{
-	(*TestBeginEventRequest)(nil),   // 0: testsystem.v1.events.TestBeginEventRequest
-	(*TestEndEventRequest)(nil),     // 1: testsystem.v1.events.TestEndEventRequest
-	(*StepBeginEventRequest)(nil),   // 2: testsystem.v1.events.StepBeginEventRequest
-	(*StepEndEventRequest)(nil),     // 3: testsystem.v1.events.StepEndEventRequest
-	(*TestFailureEventRequest)(nil), // 4: testsystem.v1.events.TestFailureEventRequest
-	(*TestErrorEventRequest)(nil),   // 5: testsystem.v1.events.TestErrorEventRequest
-	(*StdErrorEventRequest)(nil),    // 6: testsystem.v1.events.StdErrorEventRequest
-	(*StdOutputEventRequest)(nil),   // 7: testsystem.v1.events.StdOutputEventRequest
-	(*SuiteBeginEventRequest)(nil),  // 8: testsystem.v1.events.SuiteBeginEventRequest
-	(*SuiteEndEventRequest)(nil),    // 9: testsystem.v1.events.SuiteEndEventRequest
-	(*HeartbeatEventRequest)(nil),   // 10: testsystem.v1.events.HeartbeatEventRequest
-	(*MapTestRunEventRequest)(nil),  // 11: testsystem.v1.events.MapTestRunEventRequest
-	(*TestRunEndEventRequest)(nil),  // 12: testsystem.v1.events.TestRunEndEventRequest
-	nil,                             // 13: testsystem.v1.events.MapTestRunEventRequest.MetadataEntry
-	(*entities.TestCaseRun)(nil),    // 14: testsystem.v1.entities.TestCaseRun
-	(*entities.StepRun)(nil),        // 15: testsystem.v1.entities.StepRun
-	(*timestamppb.Timestamp)(nil),   // 16: google.protobuf.Timestamp
-	(*common.Attachment)(nil),       // 17: testsystem.v1.common.Attachment
-	(*entities.TestSuiteRun)(nil),   // 18: testsystem.v1.entities.TestSuiteRun
-	(common.TestStatus)(0),          // 19: testsystem.v1.common.TestStatus
-	(*durationpb.Duration)(nil),     // 20: google.protobuf.Duration
+	(*TestBeginEventRequest)(nil),      // 0: testsystem.v1.events.TestBeginEventRequest
+	(*TestEndEventRequest)(nil),        // 1: testsystem.v1.events.TestEndEventRequest
+	(*StepBeginEventRequest)(nil),      // 2: testsystem.v1.events.StepBeginEventRequest
+	(*StepEndEventRequest)(nil),        // 3: testsystem.v1.events.StepEndEventRequest
+	(*TestFailureEventRequest)(nil),    // 4: testsystem.v1.events.TestFailureEventRequest
+	(*TestErrorEventRequest)(nil),      // 5: testsystem.v1.events.TestErrorEventRequest
+	(*StdErrorEventRequest)(nil),       // 6: testsystem.v1.events.StdErrorEventRequest
+	(*StdOutputEventRequest)(nil),      // 7: testsystem.v1.events.StdOutputEventRequest
+	(*SuiteBeginEventRequest)(nil),     // 8: testsystem.v1.events.SuiteBeginEventRequest
+	(*SuiteEndEventRequest)(nil),       // 9: testsystem.v1.events.SuiteEndEventRequest
+	(*HeartbeatEventRequest)(nil),      // 10: testsystem.v1.events.HeartbeatEventRequest
+	(*ReportRunStartEventRequest)(nil), // 11: testsystem.v1.events.ReportRunStartEventRequest
+	(*TestRunEndEventRequest)(nil),     // 12: testsystem.v1.events.TestRunEndEventRequest
+	nil,                                // 13: testsystem.v1.events.ReportRunStartEventRequest.MetadataEntry
+	(*entities.TestCaseRun)(nil),       // 14: testsystem.v1.entities.TestCaseRun
+	(*entities.StepRun)(nil),           // 15: testsystem.v1.entities.StepRun
+	(*timestamppb.Timestamp)(nil),      // 16: google.protobuf.Timestamp
+	(*common.Attachment)(nil),          // 17: testsystem.v1.common.Attachment
+	(*entities.TestSuiteRun)(nil),      // 18: testsystem.v1.entities.TestSuiteRun
+	(common.TestStatus)(0),             // 19: testsystem.v1.common.TestStatus
+	(*durationpb.Duration)(nil),        // 20: google.protobuf.Duration
 }
 var file_testsystem_v1_events_events_proto_depIdxs = []int32{
 	14, // 0: testsystem.v1.events.TestBeginEventRequest.test_case:type_name -> testsystem.v1.entities.TestCaseRun
@@ -922,8 +922,8 @@ var file_testsystem_v1_events_events_proto_depIdxs = []int32{
 	18, // 10: testsystem.v1.events.SuiteBeginEventRequest.suite:type_name -> testsystem.v1.entities.TestSuiteRun
 	18, // 11: testsystem.v1.events.SuiteEndEventRequest.suite:type_name -> testsystem.v1.entities.TestSuiteRun
 	16, // 12: testsystem.v1.events.HeartbeatEventRequest.timestamp:type_name -> google.protobuf.Timestamp
-	18, // 13: testsystem.v1.events.MapTestRunEventRequest.test_suites:type_name -> testsystem.v1.entities.TestSuiteRun
-	13, // 14: testsystem.v1.events.MapTestRunEventRequest.metadata:type_name -> testsystem.v1.events.MapTestRunEventRequest.MetadataEntry
+	18, // 13: testsystem.v1.events.ReportRunStartEventRequest.test_suites:type_name -> testsystem.v1.entities.TestSuiteRun
+	13, // 14: testsystem.v1.events.ReportRunStartEventRequest.metadata:type_name -> testsystem.v1.events.ReportRunStartEventRequest.MetadataEntry
 	19, // 15: testsystem.v1.events.TestRunEndEventRequest.final_status:type_name -> testsystem.v1.common.TestStatus
 	16, // 16: testsystem.v1.events.TestRunEndEventRequest.start_time:type_name -> google.protobuf.Timestamp
 	20, // 17: testsystem.v1.events.TestRunEndEventRequest.duration:type_name -> google.protobuf.Duration

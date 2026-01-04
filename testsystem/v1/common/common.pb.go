@@ -32,6 +32,8 @@ const (
 	TestStatus_BROKEN      TestStatus = 4
 	TestStatus_TIMEDOUT    TestStatus = 5 // Test execution exceeded timeout
 	TestStatus_INTERRUPTED TestStatus = 6 // Test execution was interrupted
+	TestStatus_RUNNING     TestStatus = 7 // Test is currently being executed
+	TestStatus_NOT_RUN     TestStatus = 8 // Test was not run
 )
 
 // Enum value maps for TestStatus.
@@ -44,6 +46,8 @@ var (
 		4: "BROKEN",
 		5: "TIMEDOUT",
 		6: "INTERRUPTED",
+		7: "RUNNING",
+		8: "NOT_RUN",
 	}
 	TestStatus_value = map[string]int32{
 		"UNKNOWN":     0,
@@ -53,6 +57,8 @@ var (
 		"BROKEN":      4,
 		"TIMEDOUT":    5,
 		"INTERRUPTED": 6,
+		"RUNNING":     7,
+		"NOT_RUN":     8,
 	}
 )
 
@@ -193,7 +199,7 @@ const file_testsystem_v1_common_common_proto_rawDesc = "" +
 	"\tmime_type\x18\x02 \x01(\tR\bmimeType\x12\x1a\n" +
 	"\acontent\x18\x03 \x01(\fH\x00R\acontent\x12\x12\n" +
 	"\x03uri\x18\x04 \x01(\tH\x00R\x03uriB\t\n" +
-	"\apayload*i\n" +
+	"\apayload*\x83\x01\n" +
 	"\n" +
 	"TestStatus\x12\v\n" +
 	"\aUNKNOWN\x10\x00\x12\n" +
@@ -205,7 +211,9 @@ const file_testsystem_v1_common_common_proto_rawDesc = "" +
 	"\n" +
 	"\x06BROKEN\x10\x04\x12\f\n" +
 	"\bTIMEDOUT\x10\x05\x12\x0f\n" +
-	"\vINTERRUPTED\x10\x06B`\n" +
+	"\vINTERRUPTED\x10\x06\x12\v\n" +
+	"\aRUNNING\x10\a\x12\v\n" +
+	"\aNOT_RUN\x10\bB`\n" +
 	"%com.stanterprise.testsystem.v1.commonP\x01Z5github.com/stanterprise/proto-go/testsystem/v1/commonb\x06proto3"
 
 var (
