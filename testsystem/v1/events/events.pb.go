@@ -209,6 +209,7 @@ type TestFailureEventRequest struct {
 	Timestamp      *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	Attachments    []*common.Attachment   `protobuf:"bytes,5,rep,name=attachments,proto3" json:"attachments,omitempty"`
 	RunId          string                 `protobuf:"bytes,6,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
+	RetryIndex     int32                  `protobuf:"varint,7,opt,name=retry_index,json=retryIndex,proto3" json:"retry_index,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -285,6 +286,13 @@ func (x *TestFailureEventRequest) GetRunId() string {
 	return ""
 }
 
+func (x *TestFailureEventRequest) GetRetryIndex() int32 {
+	if x != nil {
+		return x.RetryIndex
+	}
+	return 0
+}
+
 type TestErrorEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TestId        string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
@@ -293,6 +301,7 @@ type TestErrorEventRequest struct {
 	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	Attachments   []*common.Attachment   `protobuf:"bytes,5,rep,name=attachments,proto3" json:"attachments,omitempty"`
 	RunId         string                 `protobuf:"bytes,6,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
+	RetryIndex    int32                  `protobuf:"varint,7,opt,name=retry_index,json=retryIndex,proto3" json:"retry_index,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -369,6 +378,13 @@ func (x *TestErrorEventRequest) GetRunId() string {
 	return ""
 }
 
+func (x *TestErrorEventRequest) GetRetryIndex() int32 {
+	if x != nil {
+		return x.RetryIndex
+	}
+	return 0
+}
+
 type StdErrorEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TestId        string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
@@ -376,6 +392,7 @@ type StdErrorEventRequest struct {
 	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	TestCaseRunId string                 `protobuf:"bytes,4,opt,name=test_case_run_id,json=testCaseRunId,proto3" json:"test_case_run_id,omitempty"` // Reference to the specific test case run
 	RunId         string                 `protobuf:"bytes,5,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
+	RetryIndex    int32                  `protobuf:"varint,6,opt,name=retry_index,json=retryIndex,proto3" json:"retry_index,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -445,6 +462,13 @@ func (x *StdErrorEventRequest) GetRunId() string {
 	return ""
 }
 
+func (x *StdErrorEventRequest) GetRetryIndex() int32 {
+	if x != nil {
+		return x.RetryIndex
+	}
+	return 0
+}
+
 type StdOutputEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TestId        string                 `protobuf:"bytes,1,opt,name=test_id,json=testId,proto3" json:"test_id,omitempty"`
@@ -452,6 +476,7 @@ type StdOutputEventRequest struct {
 	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	TestCaseRunId string                 `protobuf:"bytes,4,opt,name=test_case_run_id,json=testCaseRunId,proto3" json:"test_case_run_id,omitempty"` // Reference to the specific test case run
 	RunId         string                 `protobuf:"bytes,5,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
+	RetryIndex    int32                  `protobuf:"varint,6,opt,name=retry_index,json=retryIndex,proto3" json:"retry_index,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -519,6 +544,13 @@ func (x *StdOutputEventRequest) GetRunId() string {
 		return x.RunId
 	}
 	return ""
+}
+
+func (x *StdOutputEventRequest) GetRetryIndex() int32 {
+	if x != nil {
+		return x.RetryIndex
+	}
+	return 0
 }
 
 type SuiteBeginEventRequest struct {
@@ -817,7 +849,7 @@ const file_testsystem_v1_events_events_proto_rawDesc = "" +
 	"\x15StepBeginEventRequest\x123\n" +
 	"\x04step\x18\x01 \x01(\v2\x1f.testsystem.v1.entities.StepRunR\x04step\"J\n" +
 	"\x13StepEndEventRequest\x123\n" +
-	"\x04step\x18\x01 \x01(\v2\x1f.testsystem.v1.entities.StepRunR\x04step\"\x91\x02\n" +
+	"\x04step\x18\x01 \x01(\v2\x1f.testsystem.v1.entities.StepRunR\x04step\"\xb2\x02\n" +
 	"\x17TestFailureEventRequest\x12\x17\n" +
 	"\atest_id\x18\x01 \x01(\tR\x06testId\x12'\n" +
 	"\x0ffailure_message\x18\x02 \x01(\tR\x0efailureMessage\x12\x1f\n" +
@@ -825,7 +857,9 @@ const file_testsystem_v1_events_events_proto_rawDesc = "" +
 	"stackTrace\x128\n" +
 	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12B\n" +
 	"\vattachments\x18\x05 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\x12\x15\n" +
-	"\x06run_id\x18\x06 \x01(\tR\x05runId\"\x8b\x02\n" +
+	"\x06run_id\x18\x06 \x01(\tR\x05runId\x12\x1f\n" +
+	"\vretry_index\x18\a \x01(\x05R\n" +
+	"retryIndex\"\xac\x02\n" +
 	"\x15TestErrorEventRequest\x12\x17\n" +
 	"\atest_id\x18\x01 \x01(\tR\x06testId\x12#\n" +
 	"\rerror_message\x18\x02 \x01(\tR\ferrorMessage\x12\x1f\n" +
@@ -833,19 +867,25 @@ const file_testsystem_v1_events_events_proto_rawDesc = "" +
 	"stackTrace\x128\n" +
 	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12B\n" +
 	"\vattachments\x18\x05 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\x12\x15\n" +
-	"\x06run_id\x18\x06 \x01(\tR\x05runId\"\xc3\x01\n" +
+	"\x06run_id\x18\x06 \x01(\tR\x05runId\x12\x1f\n" +
+	"\vretry_index\x18\a \x01(\x05R\n" +
+	"retryIndex\"\xe4\x01\n" +
 	"\x14StdErrorEventRequest\x12\x17\n" +
 	"\atest_id\x18\x01 \x01(\tR\x06testId\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x128\n" +
 	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12'\n" +
 	"\x10test_case_run_id\x18\x04 \x01(\tR\rtestCaseRunId\x12\x15\n" +
-	"\x06run_id\x18\x05 \x01(\tR\x05runId\"\xc4\x01\n" +
+	"\x06run_id\x18\x05 \x01(\tR\x05runId\x12\x1f\n" +
+	"\vretry_index\x18\x06 \x01(\x05R\n" +
+	"retryIndex\"\xe5\x01\n" +
 	"\x15StdOutputEventRequest\x12\x17\n" +
 	"\atest_id\x18\x01 \x01(\tR\x06testId\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x128\n" +
 	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12'\n" +
 	"\x10test_case_run_id\x18\x04 \x01(\tR\rtestCaseRunId\x12\x15\n" +
-	"\x06run_id\x18\x05 \x01(\tR\x05runId\"T\n" +
+	"\x06run_id\x18\x05 \x01(\tR\x05runId\x12\x1f\n" +
+	"\vretry_index\x18\x06 \x01(\x05R\n" +
+	"retryIndex\"T\n" +
 	"\x16SuiteBeginEventRequest\x12:\n" +
 	"\x05suite\x18\x01 \x01(\v2$.testsystem.v1.entities.TestSuiteRunR\x05suite\"R\n" +
 	"\x14SuiteEndEventRequest\x12:\n" +
