@@ -231,6 +231,7 @@ type StepRun struct {
 	Location      string                 `protobuf:"bytes,15,opt,name=location,proto3" json:"location,omitempty"`                                                                          // Location in the code where the step is defined
 	Category      string                 `protobuf:"bytes,16,opt,name=category,proto3" json:"category,omitempty"`                                                                          // Category of step (e.g., "hook", "fixture", "test.step")
 	RetryIndex    int32                  `protobuf:"varint,17,opt,name=retry_index,json=retryIndex,proto3" json:"retry_index,omitempty"`                                                   // Current retry attempt index of the parent test case
+	Attachments   []*common.Attachment   `protobuf:"bytes,18,rep,name=attachments,proto3" json:"attachments,omitempty"`                                                                    // Attachments related to the step result
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -384,6 +385,13 @@ func (x *StepRun) GetRetryIndex() int32 {
 	return 0
 }
 
+func (x *StepRun) GetAttachments() []*common.Attachment {
+	if x != nil {
+		return x.Attachments
+	}
+	return nil
+}
+
 var File_testsystem_v1_entities_test_case_proto protoreflect.FileDescriptor
 
 const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
@@ -416,7 +424,7 @@ const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
 	"\atimeout\x18\x13 \x01(\x05R\atimeout\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xa2\x05\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xe6\x05\n" +
 	"\aStepRun\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
 	"\x06run_id\x18\x02 \x01(\tR\x05runId\x12 \n" +
@@ -438,7 +446,8 @@ const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
 	"\blocation\x18\x0f \x01(\tR\blocation\x12\x1a\n" +
 	"\bcategory\x18\x10 \x01(\tR\bcategory\x12\x1f\n" +
 	"\vretry_index\x18\x11 \x01(\x05R\n" +
-	"retryIndex\x1a;\n" +
+	"retryIndex\x12B\n" +
+	"\vattachments\x18\x12 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01Bd\n" +
@@ -478,11 +487,12 @@ var file_testsystem_v1_entities_test_case_proto_depIdxs = []int32{
 	6,  // 7: testsystem.v1.entities.StepRun.duration:type_name -> google.protobuf.Duration
 	3,  // 8: testsystem.v1.entities.StepRun.metadata:type_name -> testsystem.v1.entities.StepRun.MetadataEntry
 	4,  // 9: testsystem.v1.entities.StepRun.status:type_name -> testsystem.v1.common.TestStatus
-	10, // [10:10] is the sub-list for method output_type
-	10, // [10:10] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	7,  // 10: testsystem.v1.entities.StepRun.attachments:type_name -> testsystem.v1.common.Attachment
+	11, // [11:11] is the sub-list for method output_type
+	11, // [11:11] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_testsystem_v1_entities_test_case_proto_init() }

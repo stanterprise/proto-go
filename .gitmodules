@@ -1,4 +1,4 @@
 [submodule "protobuf"]
 	path = protobuf
 	url = https://github.com/stanterprise/protobuf.git
-	tag = v0.1.0
+	tag = v0.1.1
