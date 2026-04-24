@@ -98,6 +98,7 @@ type TestSuiteRun struct {
 	Owner         string                 `protobuf:"bytes,18,opt,name=owner,proto3" json:"owner,omitempty"`                                                                                // Team or individual responsible for the test suite
 	TestCases     []*TestCaseRun         `protobuf:"bytes,19,rep,name=test_cases,json=testCases,proto3" json:"test_cases,omitempty"`                                                       // Nested test case objects (optional, for sending full structure)
 	SubSuites     []*TestSuiteRun        `protobuf:"bytes,20,rep,name=sub_suites,json=subSuites,proto3" json:"sub_suites,omitempty"`                                                       // Nested test suite objects (optional, for sending full structure)
+	ExecutionId   string                 `protobuf:"bytes,21,opt,name=execution_id,json=executionId,proto3" json:"execution_id,omitempty"`                                                 // Identifier for the specific execution instance of this test suite run (useful for parallel runs)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -272,11 +273,18 @@ func (x *TestSuiteRun) GetSubSuites() []*TestSuiteRun {
 	return nil
 }
 
+func (x *TestSuiteRun) GetExecutionId() string {
+	if x != nil {
+		return x.ExecutionId
+	}
+	return ""
+}
+
 var File_testsystem_v1_entities_test_suite_proto protoreflect.FileDescriptor
 
 const file_testsystem_v1_entities_test_suite_proto_rawDesc = "" +
 	"\n" +
-	"'testsystem/v1/entities/test_suite.proto\x12\x16testsystem.v1.entities\x1a!testsystem/v1/common/common.proto\x1a&testsystem/v1/entities/test_case.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\"\x92\a\n" +
+	"'testsystem/v1/entities/test_suite.proto\x12\x16testsystem.v1.entities\x1a!testsystem/v1/common/common.proto\x1a&testsystem/v1/entities/test_case.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\"\xb5\a\n" +
 	"\fTestSuiteRun\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
@@ -301,7 +309,8 @@ const file_testsystem_v1_entities_test_suite_proto_rawDesc = "" +
 	"\n" +
 	"test_cases\x18\x13 \x03(\v2#.testsystem.v1.entities.TestCaseRunR\ttestCases\x12C\n" +
 	"\n" +
-	"sub_suites\x18\x14 \x03(\v2$.testsystem.v1.entities.TestSuiteRunR\tsubSuites\x1a;\n" +
+	"sub_suites\x18\x14 \x03(\v2$.testsystem.v1.entities.TestSuiteRunR\tsubSuites\x12!\n" +
+	"\fexecution_id\x18\x15 \x01(\tR\vexecutionId\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*:\n" +

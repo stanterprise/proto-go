@@ -45,6 +45,7 @@ type TestCaseRun struct {
 	RetryCount    int32                  `protobuf:"varint,17,opt,name=retry_count,json=retryCount,proto3" json:"retry_count,omitempty"`                                                    // Total number of retry attempts allowed for this test
 	RetryIndex    int32                  `protobuf:"varint,18,opt,name=retry_index,json=retryIndex,proto3" json:"retry_index,omitempty"`                                                    // Current retry attempt index (0 for first attempt)
 	Timeout       int32                  `protobuf:"varint,19,opt,name=timeout,proto3" json:"timeout,omitempty"`                                                                            // Timeout in milliseconds for this test
+	ExecutionId   string                 `protobuf:"bytes,20,opt,name=execution_id,json=executionId,proto3" json:"execution_id,omitempty"`                                                  // Identifier for the specific execution instance of this test case (useful for parallel runs)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -212,6 +213,13 @@ func (x *TestCaseRun) GetTimeout() int32 {
 	return 0
 }
 
+func (x *TestCaseRun) GetExecutionId() string {
+	if x != nil {
+		return x.ExecutionId
+	}
+	return ""
+}
+
 type StepRun struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                                                       // Unique identifier for the step result
@@ -232,6 +240,7 @@ type StepRun struct {
 	Category      string                 `protobuf:"bytes,16,opt,name=category,proto3" json:"category,omitempty"`                                                                          // Category of step (e.g., "hook", "fixture", "test.step")
 	RetryIndex    int32                  `protobuf:"varint,17,opt,name=retry_index,json=retryIndex,proto3" json:"retry_index,omitempty"`                                                   // Current retry attempt index of the parent test case
 	Attachments   []*common.Attachment   `protobuf:"bytes,18,rep,name=attachments,proto3" json:"attachments,omitempty"`                                                                    // Attachments related to the step result
+	ExecutionId   string                 `protobuf:"bytes,19,opt,name=execution_id,json=executionId,proto3" json:"execution_id,omitempty"`                                                 // Identifier for the specific execution instance of the parent test case run this step belongs to (useful for parallel runs)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -392,11 +401,18 @@ func (x *StepRun) GetAttachments() []*common.Attachment {
 	return nil
 }
 
+func (x *StepRun) GetExecutionId() string {
+	if x != nil {
+		return x.ExecutionId
+	}
+	return ""
+}
+
 var File_testsystem_v1_entities_test_case_proto protoreflect.FileDescriptor
 
 const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
 	"\n" +
-	"&testsystem/v1/entities/test_case.proto\x12\x16testsystem.v1.entities\x1a!testsystem/v1/common/common.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\"\xab\x06\n" +
+	"&testsystem/v1/entities/test_case.proto\x12\x16testsystem.v1.entities\x1a!testsystem/v1/common/common.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\"\xce\x06\n" +
 	"\vTestCaseRun\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
@@ -421,10 +437,11 @@ const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
 	"retryCount\x12\x1f\n" +
 	"\vretry_index\x18\x12 \x01(\x05R\n" +
 	"retryIndex\x12\x18\n" +
-	"\atimeout\x18\x13 \x01(\x05R\atimeout\x1a;\n" +
+	"\atimeout\x18\x13 \x01(\x05R\atimeout\x12!\n" +
+	"\fexecution_id\x18\x14 \x01(\tR\vexecutionId\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xe6\x05\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x89\x06\n" +
 	"\aStepRun\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
 	"\x06run_id\x18\x02 \x01(\tR\x05runId\x12 \n" +
@@ -447,7 +464,8 @@ const file_testsystem_v1_entities_test_case_proto_rawDesc = "" +
 	"\bcategory\x18\x10 \x01(\tR\bcategory\x12\x1f\n" +
 	"\vretry_index\x18\x11 \x01(\x05R\n" +
 	"retryIndex\x12B\n" +
-	"\vattachments\x18\x12 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\x1a;\n" +
+	"\vattachments\x18\x12 \x03(\v2 .testsystem.v1.common.AttachmentR\vattachments\x12!\n" +
+	"\fexecution_id\x18\x13 \x01(\tR\vexecutionId\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01Bd\n" +
